@@ -1,0 +1,10 @@
+Package: MATH4753ouTrev0002
+Type: Package
+Title: Math4753
+Version: 0.1.0
+Author: Luis Mario Trevisi
+Maintainer:Luis Mario Trevisi <lmtrevisi@hotmail.com>
+Description: Class Fall 2020 Math 4753
+License: What license is it under?
+Encoding: MIT
+LazyData: true
