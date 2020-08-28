@@ -1,0 +1,70 @@
+---
+title: "Lab1"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Tasks
+
+## Task 1
+
+Find the working directory
+
+```{r}
+getwd()
+```
+
+## Task 2
+
+Read in the DDT data
+
+```{r}
+ddt <- read.csv("DDT.csv")
+head(ddt)
+```
+
+
+## Task 3
+
+  a. Qualitative Variables: River, Species
+  b. Quantitative Variables: Mile, Length, Weight, DDT
+
+
+## Task 4
+
+Table of the Rivers
+
+```{r}
+table(ddt$RIVER)
+```
+
+Barplot of the Rivers
+
+```{r}
+table(ddt$RIVER)->tab
+barplot(tab,col = 1:4, main="Rivers")
+
+```
+
+Table of the rivers crossed with the species of fish
+
+```{r}
+
+```
+
+barplot of the rivers crossed with the species of fish
+
+```{r}
+
+```
+
+
