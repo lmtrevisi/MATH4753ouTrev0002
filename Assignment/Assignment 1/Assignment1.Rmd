@@ -1,0 +1,446 @@
+---
+title: "Assigment 1"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# 15/15
+# Task 1
+
+The Grading system in this class would be devided on 7 categories with different percentages: 
+```{r}
+read.csv('ClassSummary.csv')
+```
+ 
+ The grades would be determine by using the percentages above. there would not be curving. also, the grade cuts would be 90 and above for an A, 80 and above for a B, 60 and above for a C, 50 and above for a D, and the rest would be a F
+ 
+ 
+# Task 2
+ 
+
+```{r}
+ddt = read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Laboratories\\Lab 1\\DDT.csv")
+head(ddt)
+```
+  a) 
+```{r}
+coplot(LENGTH~WEIGHT|RIVER*SPECIES,data=ddt, col = ddt$MILE)
+```
+  
+ b) This represent the fishes of the species  "CCATFISH" that where trap on the rivers "FCM", "LCM" and "SCM" (left to rigth). the color of the dots also represent the the postions (miles) where the fished where caught. finally the x and why axes give the information about the weight and the length of the fish.
+ 
+ c) it creates a factor variable for each different mile length that was recorded. in this way we can see how many different mile numbers were reported. i.e it creates qualitative subgroups for the different types of miles that were reported. 
+
+d) it counts the total number of qualitative subgroups that were created on part A.
+
+e) because "LMBASS" and "SMBUFFALO" were not caugth on the rivers "FCM", "LCM" and "SCM"
+
+f)
+```{r}
+m = with(ddt, ddt[SPECIES == "CCATFISH" & RIVER=="FCM",])
+mean(m$DDT)
+
+```
+
+# Task 3
+
+a) Quantitative 
+b) Quantitative
+c) Qualitative
+d) Quantitative
+e) Qualitative
+f) Quantitative
+g) Qualitative
+
+# task 4
+
+ a) Simple Random Sampling, Stratified random sampling,  cluster sampling,  systematic sampling
+ 
+ b)
+ 
+ Simple Random Sampling: it is a method where every experimental unit and samples have the same chance of selection 
+ 
+ Stratified random sampling: this is a method employed when the experimental units can be separated into groups of units. the experimental units would be more similar within the groups than across the groups
+ 
+ cluster sampling: in this method, natural groupings are sampled (called clusters) first and then data is collected for each experimental unit within the cluster
+ 
+ systematic sampling: this method consist on choosing and analyzing every nth experimental units 
+ 
+# Task 5
+ 
+```{r}
+mtbe=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\MTBE.csv", header=TRUE) 
+head(mtbe) # First six lines
+dim(mtbe) # rows and columns
+ind=sample(1:223,5,replace=FALSE) # random indices
+mtbe[ind,]
+
+```
+ i)
+```{r}
+mtbeo=na.omit(mtbe)
+mtbeo
+```
+ ii) 
+```{r}
+depth=mtbeo[mtbeo$Aquifier=="Bedrock",]$Depth
+sd(depth)
+```
+ 
+# Task 6
+ 
+```{r}
+earthquake=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\EARTHQUAKE.csv", header=TRUE) 
+#head(earthquake) # First six lines
+#dim(earthquake) # rows and columns
+ind=sample(1:2929,30,replace=FALSE) # random indices
+earthquake[ind,]
+```
+ i) 
+```{r}
+plot(ts(earthquake$MAG))
+```
+ ii) 
+```{r}
+median(earthquake$MAGNITUDE)
+```
+ 
+# Task 7
+ 
+ a) Stratified random sampling
+ b) All fish in the Tennessee River
+ c)RIVER (location) and SPECIES
+ 
+# Task 8
+
+a) Bar Plot
+b) Types of Robotic Limbs
+c) Robots with robotic legs
+d)
+
+```{r}
+read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\Robot.csv", header=TRUE) 
+```
+e)
+
+```{r}
+pareto<-function(x,mn="Pareto barplot",...){  # x is a vector
+x.tab=table(x)
+xx.tab=sort(x.tab, decreasing=TRUE,index.return=FALSE)
+cumsum(as.vector(xx.tab))->cs
+length(x.tab)->lenx
+bp<-barplot(xx.tab,ylim=c(0,max(cs)),las=2)
+lb<-seq(0,cs[lenx],l=11)
+axis(side=4,at=lb,labels=paste(seq(0,100,length=11),"%",sep=""),las=1,line=-1,col="Blue",col.axis="Red")
+for(i in 1:(lenx-1)){
+segments(bp[i],cs[i],bp[i+1],cs[i+1],col=i,lwd=2)
+}
+title(main=mn,...)
+
+}
+
+freq=c(15,8,63,20)
+RL=c("None","Both","LegsO","WheelsO")
+l=rep(RL,freq)
+pareto(l)
+```
+
+# Task 9
+a)
+```{r}
+freq=c(32,6,12)
+RL=c("Windows","Explorer","Office")
+pie(freq,RL)
+```
+b)
+```{r}
+freq=c(6, 8,22, 3, 11)
+RL=c(" Denial of service","Information disclosure","Remote code execution"," Spoofing","Privilege elevation")
+l=rep(RL,freq)
+pareto(l)
+```
+# Task 10
+
+```{r}
+swd=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\SWDEFECTS.csv", header=TRUE)
+head(swd)
+library(plotrix)
+tab=table(swd$defect)
+rtab=tab/sum(tab)
+round(rtab,2)
+pie3D(rtab,labels=list("OK","Defective"),main="pie plot of SWD")
+
+```
+It seems like around 10% of the code would be wrong, which is relatively small. thus, the likelyhood of getting a wrong code is small 
+ 
+# Task 11
+
+a)
+
+```{r}
+voltage.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\VOLTAGE.csv", header=TRUE)
+old<-subset(voltage.df,subset=LOCATION=="OLD")
+old$VOLTAGE->vtn
+#vtn
+#max(vtn)
+#min(vtn)
+lept<-min(vtn)-0.05
+rept<-max(vtn)+0.05
+rnge<-rept-lept
+inc<-rnge/9
+inc
+seq(lept, rept,by=inc)->cl
+#cl
+
+cvtn<-cut(vtn,breaks=cl)
+old.tab=table(cvtn)
+old.tab = old.tab/sum(old.tab)
+barplot(old.tab,space=0,main="Frequency Histogram(OLD)",las=2)
+
+```
+b) 
+```{r}
+voltage.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\VOLTAGE.csv", header=TRUE)
+old<-subset(voltage.df,subset=LOCATION=="OLD")
+old$VOLTAGE->vtn
+stem(vtn)
+```
+
+the relative frequency histogram is more informative because it contains the frequency of the voltage that appears at each range. thus we have a measurement of where voltage reading lies.
+
+c)
+
+```{r}
+voltage.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\VOLTAGE.csv", header=TRUE)
+new<-subset(voltage.df,subset=LOCATION=="NEW")
+new$VOLTAGE->vtn
+#vtn
+#max(vtn)
+#min(vtn)
+lept<-min(vtn)-0.05
+rept<-max(vtn)+0.05
+rnge<-rept-lept
+inc<-rnge/9
+inc
+seq(lept, rept,by=inc)->cl
+#cl
+
+cvtn<-cut(vtn,breaks=cl)
+new.tab=table(cvtn)
+new.tab = new.tab/sum(new.tab)
+barplot(new.tab,space=0,main="Frequency Histogram(NEW)",las=2)
+```
+d)
+```{r}
+layout(1:2,ncol(2))
+barplot(new.tab,space=0,main="Frequency Histogram(NEW)",las=2)
+barplot(old.tab,space=0,main="Frequency Histogram(OLD)",las=2)
+```
+
+in the old graph we can see that the majority of the measured voltage is higher than the one on the new plot. thus, the new local process is not a good as the one in the remote location
+
+e)
+```{r}
+voltage.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\VOLTAGE.csv", header=TRUE)
+new<-subset(voltage.df,subset=LOCATION=="NEW")
+old<-subset(voltage.df,subset=LOCATION=="OLD")
+# Create the function.
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+#Mean OlD
+mean(old$VOLTAGE)
+#Median OlD
+median(old$VOLTAGE)
+#Mode OlD
+getmode(old$VOLTAGE)
+#Mean NEW
+mean(new$VOLTAGE)
+#Median NEW
+median(new$VOLTAGE)
+#Mode NEW
+getmode(new$VOLTAGE)
+```
+the old site has frequently higher voltages than the new site as its mode value is a higher voltage. nevertheless, the mean and median are more similar but still the old facility has higher values thant the new one. The preferred method to measure would be the mode as it shows the most frequent voltage that each facility produce and in this case it portraits that the new facility does not meet the minimun voltage requirements most of the times.
+
+f)
+```{r}
+voltage.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\VOLTAGE.csv", header=TRUE)
+
+(10.5-mean(old$VOLTAGE))/sd(old$VOLTAGE)
+
+```
+g)
+
+```{r}
+voltage.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\VOLTAGE.csv", header=TRUE)
+
+(10.5-mean(new$VOLTAGE))/sd(new$VOLTAGE)
+```
+
+h)
+becaue the z is smaller in the old facility, that means that the voltage of 10.5 is closer to the mean than the mean of the new facility. thus, it is more likely that the voltage of 10.5 would occur on the old facility
+
+i)
+```{r}
+boxplot(old$VOLTAGE,ylab="OLd Facility",xlab= "voltage",col="Blue",notch=TRUE, horizontal =TRUE)
+```
+yes, there seems to be outliers as there are points which deviate greatly from the data bulk
+j)
+
+Possible Outliers:
+
+```{r}
+mpg = old$VOLTAGE
+z = (mpg-mean(mpg))/sd(mpg)
+mpg[abs(z)>=2 & abs(z)<=3]
+```
+
+ Definite Outliers
+
+```{r}
+mpg = old$VOLTAGE
+z = (mpg-mean(mpg))/sd(mpg)
+mpg[abs(z)>3]
+```
+k)
+```{r}
+boxplot(new$VOLTAGE,ylab="New Facility",xlab= "voltage",col="Blue",notch=TRUE, horizontal =TRUE)
+```
+No, i do not detect any outlier in the new data
+
+l)
+Possible Outliers:
+
+```{r}
+mpg = new$VOLTAGE
+z = (mpg-mean(mpg))/sd(mpg)
+mpg[abs(z)>=2 & abs(z)<=3]
+```
+
+ Definite Outliers
+
+```{r}
+mpg = new$VOLTAGE
+z = (mpg-mean(mpg))/sd(mpg)
+mpg[abs(z)>3]
+```
+there is no outliers
+
+m)
+
+```{r}
+layout(matrix(1:2, nc=2))
+boxplot(old$VOLTAGE,ylab="OLd Facility",xlab= "voltage",col="Blue",notch=TRUE)
+boxplot(new$VOLTAGE,ylab="New Facility",xlab= "voltage",col="Blue",notch=TRUE)
+```
+the old facility seems to have the data less spread than the new facility
+# Task 12
+
+```{r}
+rough.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\ROUGHPIPE.csv", header=TRUE)
+#head(rough.df)
+#Upper bound
+mean(rough.df$ROUGH)+2*sd(rough.df$ROUGH)
+#Lower Bound
+mean(rough.df$ROUGH)-2*sd(rough.df$ROUGH)
+```
+
+# Task 13
+
+```{r}
+ants.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\GOBIANTS.csv", header=TRUE)
+head(ants.df)
+```
+a)
+```{r}
+ants.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\GOBIANTS.csv", header=TRUE)
+
+mean(ants.df$AntSpecies)
+median(ants.df$AntSpecies)
+
+# Create the function.
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+getmode(ants.df$AntSpecies)
+
+```
+the mean give us a number of 12.82 which mean that on average, 12.82 species where found across the recorded data.neverthless this value is significantly higher than the mean and mode which implies that there were possible outliers on the data that inflated the value of the mean. the median an mode were 5 which implies that the center of the data range and the most frequent ammount of antspecies where the same (5)
+b)
+i would recommend to use the median as it is the middle number when the measurments are arranged in acending order. the other two center frequency method may not give the exact center of the data due to the way that they are calculated. the mean is the average and the mode is the most frequent number (both are not the center of the measurements)
+
+c)
+```{r}
+m = with(ants.df, ants.df[ants.df$Region=="Dry Steppe",])
+m
+mean(m$PlantCov)
+median(m$PlantCov)
+getmode(m$PlantCov)
+```
+d)
+```{r}
+m = with(ants.df, ants.df[ants.df$Region=="Gobi Desert",])
+m
+mean(m$PlantCov)
+median(m$PlantCov)
+getmode(m$PlantCov)
+```
+e) Yes, they are different by around 10 units
+
+# Task 14
+
+a)
+```{r}
+galaxy.df=read.csv("C:\\Users\\Luis Mario Trevisi\\OneDrive - University of Oklahoma\\OU\\Applied Statistical Methods\\Math4753\\MATH4753ouTrev0002\\Assignment\\Assignment 1\\GALAXY2.csv", header=TRUE)
+head(galaxy.df)
+library(lattice)
+hist(galaxy.df$VELOCITY, breaks = 10)
+```
+
+b)
+Yes it supports the theory because we can clearly see two modes
+
+c) 
+
+```{r}
+A1775A = with(galaxy.df, galaxy.df[galaxy.df$VELOCITY>17999 & galaxy.df$VELOCITY < 21000,])
+A1775B = with(galaxy.df, galaxy.df[galaxy.df$VELOCITY>21000 & galaxy.df$VELOCITY < 25000,])
+#Mean A1775A
+mean(A1775A)
+#Median A1775A
+median(A1775A)
+#Mode A1775A
+getmode(A1775A)
+#Mean A1775B
+mean(A1775B)
+#Median A1775B
+median(A1775B)
+#Mode A1775B
+getmode(A1775B)
+```
+d) it is likely to be in A1775A this is because this velocitity is close to the mean velocity of this galaxy (A1775A)
+
+# Task 15
+
+```{r}
+library(ggplot2)
+g = ggplot(ddt, aes(x=RIVER, y= LENGTH, fill = SPECIES) )
+g = g + geom_boxplot()+ggtitle("Luis Mario Trevisi")
+g
+```
+

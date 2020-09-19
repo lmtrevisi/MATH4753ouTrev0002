@@ -2,11 +2,115 @@
 title: "Lab2"
 author: "Luis Mario Trevisi"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
   
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Task 1
+
+```{r}
+getwd()
+```
+
+## Task 2
+
+```{r}
+EPAGAS <- read.csv("EPAGAS.csv")
+head(EPAGAS)
+```
+## Task 3
+
+making vector, and verfying results 
+
+```{r}
+mpg = EPAGAS$ï..MPG
+z = (mpg-mean(mpg))/sd(mpg)
+head(z)
+round(mean(z), digits = 4)
+var(z)
+sd(z)
+```
+
+Possible Outliers:
+
+```{r}
+mpg = EPAGAS$ï..MPG
+z = (mpg-mean(mpg))/sd(mpg)
+mpg[abs(z)>=2 & abs(z)<=3]
+```
+
+ Definite Outliers
+
+```{r}
+mpg = EPAGAS$ï..MPG
+z = (mpg-mean(mpg))/sd(mpg)
+mpg[abs(z)>3]
+```
+
+ Plot
+
+```{r}
+library(lattice)
+mpg = EPAGAS$ï..MPG
+z = (mpg-mean(mpg))/sd(mpg)
+mycol = ifelse(abs(z)>3, "Red",
+        ifelse(abs(z)>=2 &abs(z)<=3,"Blue", "Black"))  
+dotplot(mpg, col =mycol)
+```
+
+## Task 4
+
+a) Box Plot 
+
+```{r}
+mpg = EPAGAS$ï..MPG
+boxplot(mpg,notch = TRUE, horizontal = TRUE, col = 'black', main='Boxplot')
+```
+
+
+b) the proportion of data within 2 standard deviations of the mean of the mpg data.
+$$Proportion \geq (1-\frac{1}{k^2}) = (1-\frac{1}{4}) = \frac{1}{4} $$
+```{r}
+k = 2
+cheb = 1-(1/k^2)
+cheb
+```
+
+ 
+c) Exact Number
+```{r}
+mpg = EPAGAS$ï..MPG
+z = (mpg-mean(mpg))/sd(mpg)
+percen = length(mpg[abs(z)<=2])/length(mpg)
+percen
+```
+Thus Chebyshev agrees with the data
+
+d) what proportion (according to the rule) of the data should be within 2 standard deviations of the mean?
+
+it should be aprroximately 95%
+
+e) How well does it correspond?
+  
+It corresponds really well as it is really close to the estimation value
+
+f) Is the Empirical rule valid in this case? Why?
+
+```{r}
+mpg = EPAGAS$ï..MPG
+histogram(mpg, main = 'Histogram')
+```
+
+for the empirical equation to be valid it have to pass two assumptions: it has to be symetric and be unimodal. in the case of this data, It is not symetric distribution and thus it is not valid.
 
