@@ -1,0 +1,7 @@
+TASK	PERCENT
+ArcWelding	20
+SpotWelding	32
+Assembly	7
+MaterialHandling	34
+MaterialRemoval	3
+Dispensing/Coating	4

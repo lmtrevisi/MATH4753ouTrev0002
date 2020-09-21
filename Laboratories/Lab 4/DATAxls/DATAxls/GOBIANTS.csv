@@ -1,0 +1,12 @@
+Site,Region,Rain,Temp,PlantCov,AntSpecies,Diversity
+1,Dry Steppe ,196,5.7,40,3,0.89
+2,Dry Steppe ,196,5.7,52,3,0.83
+3,Dry Steppe ,179,7,40,52,1.31
+4,Dry Steppe ,197,8,43,7,1.48
+5,Dry Steppe ,149,8.5,27,5,0.97
+6,Gobi Desert,112,10.7,30,49,0.46
+7,Gobi Desert,125,11.4,16,5,1.23
+8,Gobi Desert,99,10.9,30,4,
+9,Gobi Desert,125,11.4,56,4,0.76
+10,Gobi Desert,84,11.4,22,5,1.26
+11,Gobi Desert,115,11.4,14,4,0.69

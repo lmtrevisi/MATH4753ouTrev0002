@@ -9,6 +9,6 @@
 #'
 #' @examples
 #' x = 1:30 ; myf(x)
-myf = function(x){
-  x^2
+myf = function(x,y){
+ 1+3+x+y
 }

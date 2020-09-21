@@ -1,0 +1,333 @@
+---
+title: "Lab4"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 1
+```{r}
+getwd()
+```
+
+# Task 2
+```{r}
+spruce.df = read.csv("SPRUCE.csv")
+tail(spruce.df)
+```
+# Task 3
+
+##  Lowest smoother scatter plot
+```{r}
+library(s20x)
+trendscatter(Height~BHDiameter,f=0.5,data=spruce.df)
+```
+
+## Make a linear model
+
+```{r}
+spruce.lm=with(spruce.df,lm(Height~BHDiameter)) 
+```
+
+## Find Residuals
+```{r}
+height.res=residuals(spruce.lm)
+
+```
+
+## Find Fitted Values
+```{r}
+height.fit=fitted(spruce.lm)
+
+```
+
+## Residual vs Fitted
+```{r}
+plot(height.fit,height.res)
+```
+
+## Residual vs Fitted using trendscatter
+```{r}
+library(s20x)
+trendscatter( height.fit,height.res)
+```
+
+## Shape of the Plot
+
+It clear from the plots that the data is following a parabolic trend. the first plot shows a more assymetric trend as the parabolic function never goes down to negative (the slope is always positve), while the the second plot, shows a negative slope after the peak. 
+this difference is due to the x and y data which implies that a linear model is not appropiated and that a cuadratic model may be more suitable
+
+## Residual Plot
+```{r}
+plot(spruce.lm, which =1)
+```
+
+## Check Normality
+
+```{r}
+normcheck(spruce.lm,shapiro.wilk = TRUE)
+```
+
+## P Value and null hypothesis
+
+The value for P is 0.29 and thus we have to accept the null hypothesis. this hypothesis states that the errors are distributed normally. 
+furthmore, according to the lab 4 sheet, we would expect the residuals to be normally distributed, the mean = 0 and to have a constant varience
+
+## Evaluating the model
+
+```{r}
+round(mean(height.res),4)
+```
+the mean is 0 for residuals
+
+## Conclusion 
+
+based on the plot of residuals vs fitted height we shoudl not use the linear model due to the fact that it has a distinct quadratic shape. if the model were to fit properly the data we would expect to see random points (noise) instead of some data with a shape (signal)
+
+# Task 4
+
+## Fit Quadratic
+```{r}
+quad.lm=lm(Height~BHDiameter + I(BHDiameter^2),data=spruce.df)
+summary(quad.lm)
+```
+
+## Plot with quadratic curve
+```{r}
+coef(quad.lm)
+plot(Height~BHDiameter,bg="Blue",pch=21,cex=1.2,
+ylim=c(0,max(Height)),xlim=c(0,max(BHDiameter)), 
+main="Spruce height prediction",data=spruce.df)
+
+myplot=function(x){
+ quad.lm$coef[1] +quad.lm$coef[2]*x  + quad.lm$coef[3]*x^2
+} 
+curve(myplot, lwd=2, col="steelblue",add=TRUE)
+```
+
+## Make quad.fit and quad.res
+```{r}
+quad.fit = fitted(quad.lm)
+quad.res=residuals(quad.lm)
+```
+
+## Residuals vs Fitted
+
+```{r}
+plot(quad.lm, which =1)
+```
+
+## Check Normality
+```{r}
+normcheck(quad.lm,shapiro.wilk = TRUE)
+```
+
+## Conclusion 
+The P value is 0.684 and thus we have to accept the null hypothesis. also the resiudal vs fitted plot shows a more random pattern that the previous model which correlate better with what we were expecting. thus the quadratic model describes better the data
+
+# Task 5
+
+## Summarize quad.lm
+```{r}
+summary(quad.lm)
+```
+## Beta Hat Values
+the value of $\hat{B_0} = 0.860896$
+the value of $\hat{B_1} = 1.469592$
+the value of $\hat{B_2} = -0.027457$
+
+## Interval estimates
+
+```{r}
+library(s20x)
+ciReg(quad.lm)
+```
+
+## Equation of Fitted Line
+
+Equation = $B_0+B_1*x+B_2x^2=0.860896+1.469592*x-0.027457*x^2$
+
+## Predictions
+```{r}
+#using quad
+predict(quad.lm, data.frame(BHDiameter=c(15,18,20)))
+#using straight line
+predict(spruce.lm, data.frame(BHDiameter=c(15,18,20)))
+```
+the predictions made by quad.lm they are larger than spruce.lm as they follow a quadratic growth.
+
+## Multiple R-saqured
+```{r}
+summary(quad.lm)$r.squared
+summary(spruce.lm)$r.squared
+```
+as we can see the $r^2$ for the quad formula is 0.774 while for the streaigth line is 0.6569 
+
+## Adjusted R-Squared
+```{r}
+summary(quad.lm)$adj.r.squared
+summary(spruce.lm)$adj.r.squared
+```
+
+the adjusted $r^2$ for the quad formula is 0.7604 while for the straight line is 0.6468 which mean that the quad equation has a better fit.
+
+the adjusted $r^2$ represent how well a data fits the model. thus a higher $r^2$ means that the model correctly predicts more data points. 
+
+## Meaning of multiple R-Squared
+
+the multiple R-squared represent how well does the model represents the data. this does not depend on the number of effectiveness of the included variables
+
+## Model with most variability
+```{r}
+anova(quad.lm)
+anova(spruce.lm)
+```
+fwe can see from the results above that the RSS for the quad.lm is smaller, thus it is fitting the data better than spruce.lm
+
+## TSS, MSS and RSS
+
+```{r}
+height.qfit=fitted(quad.lm)
+#RSS
+RSS=with(spruce.df, sum((Height-height.qfit)^2))
+RSS
+#MSS
+MSS = with(spruce.df, sum((height.qfit-mean(Height))^2))
+MSS
+#TSS
+TSS = with(spruce.df, sum((Height-mean(Height))^2))
+TSS
+
+#MSS/TSS
+MSS/TSS
+```
+
+# Task 6
+
+## Cook's Plot
+```{r}
+cooks20x(quad.lm)
+```
+
+## What Cook's Distance is 
+
+the cooks distance is a measurment of how influencial a data point is on the linear reggresion equation. for example, a point with higher cook's distance would have a higher effect on the regression than a point with smaller distance.
+
+this distance is really useful to determine the presence of outliers. furthemore, it can help the user to filter the points in such a way that every data point have a relative equal influence. 
+
+## Cook's Distance for quad.lm 
+
+in the set of data, cook's plot shows that point 24 have the highest influence on the trendline. this is clearly seen as this point has the highest line on the plot. 
+
+## quad2.lm
+```{r}
+quad2.lm=lm(Height~BHDiameter + I(BHDiameter^2) , data=spruce.df[-24,])
+```
+
+## Quad2.lm summary
+```{r}
+summary(quad2.lm)
+```
+## Quad.lm summary 
+```{r}
+summary(quad.lm)
+```
+## Comparison between quad2.lm and quad.lm
+
+as we cna see the max, min and median residuals are smaller for quad2.lm. also, the multiple and adjusted r-square values for quad2.lm are larger then quad.lm
+
+## Conclusion 
+
+the cook's plot was accurate in indicating that the 24th data point was largely influencing our data. this is shown by the fact that when this data point was remove, the r-squred values increased. 
+
+
+# Task 7
+
+## Proof
+ 
+ firstly, we need to realize that we have to lines with the point $x_k$ in common
+ $$l_1: y = B_0+B_1 x $$
+ $$l_2: y = B_0+\delta+(B_1+B_2)x $$
+ now that we have the equations and we now a point where they intercept $y_{l_1}=y_{l_2}$ we can set the to lines equal to each other
+ 
+ $$ B_0+B_1x_k =B_0+\delta+(B_1+B_2)x_k $$
+now by redistributing and cancel the repiting factor, we can simplify this expression to
+
+$$ 0=\delta+B_2x_k $$
+which implies that 
+$$\delta=-B_2x_k$$
+
+now with this result we can go back to the equation for line 2 and substitute our results 
+
+$$l_2: y = B_0-B_2x_k+(B_1+B_2)x $$
+which can be rearranged to
+$$l_2: y = B_0+B_1x+B_2(x-x_k) $$
+this equation is greatly useful as it describes l2 as an adjustment of l1. in this way by just creating an indicator function we can produce the two separte lines with just one function
+$$l_2: y = B_0+B_1x+B_2(x-x_k) I(x>x_k)$$
+where I() is one if it is true and I() is zero if false
+
+## Reproducing Plot
+```{r}
+sp2.df=within(spruce.df, X<-(BHDiameter-18)*(BHDiameter>18)) # this makes a new variable and places it within the same df
+sp2.df
+
+lmp=lm(Height~BHDiameter + X,data=sp2.df)
+tmp=summary(lmp)
+names(tmp)
+myf = function(x,coef){
+  coef[1]+coef[2]*(x) + coef[3]*(x-18)*(x-18>0)
+}
+plot(spruce.df,main="Piecewise regression")
+myf(0, coef=tmp$coefficients[,"Estimate"])
+curve(myf(x,coef=tmp$coefficients[,"Estimate"] ),add=TRUE, lwd=2,col="Blue")
+abline(v=18)
+text(18,16,paste("R sq.=",round(tmp$r.squared,4) ))
+```
+
+# Task 8
+takes vector and returns a vector of squared components
+```{r}
+library(MATH4753ouTrev0002)
+SquareValue(1:30)
+```
+
+
+# Experts
+```{r}
+plot(Height~BHDiameter,bg="Blue",pch=21,cex=1.2,
+ylim=c(0,max(Height)),xlim=c(0,max(BHDiameter)), 
+main="Spruce height prediction",data=spruce.df)
+
+#Make a quadratic model
+quad.lm=lm(Height~BHDiameter + I(BHDiameter^2),data=spruce.df)
+
+# Find the coefficients
+coef(quad.lm)
+
+#Make a function that produces heights for inputs "x"
+myplot=function(x){
+ 0.86089580 +1.46959217*x  -0.02745726*x^2
+ }
+
+# add the quadratic to the points 
+curve(myplot, lwd=2, col="steelblue",add=TRUE)
+
+#Place segments (residuals) on the plot (except for the 3 largest cooks distances. 18, 21, 24)
+with(spruce.df[-c(18,21,24),],segments(BHDiameter, Height, BHDiameter, height.qfit[-c(18,21,24)]) )
+with(spruce.df[c(18,21,24),],segments(BHDiameter, Height, BHDiameter, height.qfit[c(18,21,24)], col="Red", lwd=3) )
+with( spruce.df, arrows(5,Height[24], BHDiameter[24], Height[24],lwd=2,col="Blue"))
+with(spruce.df,text(2,Height[24], paste("Highest Cook's","\n", "distance",sep=" ")))
+with(spruce.df, text(BHDiameter,Height, 1:36,cex=0.5,pos=4))
+```
+
