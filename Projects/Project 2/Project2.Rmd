@@ -1,0 +1,17 @@
+---
+title: "Project2"
+author: "Luis Mario Trevisi"
+date: "01/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+df = read.csv("CIVILSAL.csv")
+head(df)
+plot(df)
+```
+

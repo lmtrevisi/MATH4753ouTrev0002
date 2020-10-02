@@ -1,0 +1,184 @@
+---
+title: "Lab5"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 1
+
+## Get working Directory 
+```{r}
+getwd()
+```
+# Task 2
+
+## 100 Iterations
+
+```{r}
+library(MATH4753ouTrev0002)
+mybin(iter = 100, n= 10, p=0.7)
+```
+## 200 Iterations
+
+```{r}
+library(MATH4753ouTrev0002)
+mybin(iter = 200, n= 10, p=0.7)
+```
+## 500 Iterations
+
+```{r}
+library(MATH4753ouTrev0002)
+mybin(iter = 500, n= 10, p=0.7)
+```
+## 1000 Iterations
+
+```{r}
+library(MATH4753ouTrev0002)
+mybin(iter = 1000, n= 10, p=0.7)
+```
+## 10000 Iterations
+
+```{r}
+library(MATH4753ouTrev0002)
+mybin(iter = 10000, n= 10, p=0.7)
+```
+
+##  Theoretical expectations using dbinom
+
+```{r}
+
+dbinom(0:10,10,0.7)
+
+
+```
+
+## Comparison between theoretical and 10000 iteration experiment 
+
+as we can see on the two tables, the numbers at each point are really close to each other which implies that they agree. the reason for a difference could be that more iterations are required to get closer to the real value
+
+# Task 3
+
+## Creating sample size with replacement false
+
+```{r}
+sample(20,5)
+```
+## Creating sample size with replacement true
+
+```{r}
+sample(20,5,replace  = TRUE)
+```
+## Creating the Hyperfunction Plots
+
+Iteration 100
+
+```{r}
+library(MATH4753ouTrev0002)
+myhyper(iter = 100,n = 5, r = 12,N=20)
+
+```
+Iteration 200
+
+```{r}
+library(MATH4753ouTrev0002)
+myhyper(iter = 200,n = 5, r = 12,N=20)
+
+```
+Iteration 500
+
+```{r}
+library(MATH4753ouTrev0002)
+myhyper(iter = 500,n = 5, r = 12,N=20)
+
+```
+Iteration 1000
+
+```{r}
+library(MATH4753ouTrev0002)
+myhyper(iter = 1000,n = 5, r = 12,N=20)
+
+```
+Iteration 10000
+
+```{r}
+library(MATH4753ouTrev0002)
+myhyper(iter = 10000,n = 5, r = 12,N=20)
+
+```
+
+## Theoretical using dhyper()
+
+```{r}
+dhyper(0:5,12,8,5)
+```
+
+## Comparing results if myhyper and dhyper
+
+as we can see, there is a similar issue as the previous excersise. we can clearly see that the numbers in both tables are really close. the difference in them could be attributed to the number of iterations, probably if more iterations were used on myhyper the values between this two tables would be even closer.
+
+# Task 4
+
+## Code Description
+
+this code consist in three main parts, the first one is dependent to the variable iter. this variable would tell the program how many times does it have to loop through the simulation,  the plot generation and waiting period. then we have the second subsection where we can see the variable n. this variable represents how many samples are we choosing from the sample size which is already determined to be 10. then the program runs the simulation and factors the results based on how many times each outcomes appears. after this, the results are plot as a frequency plot. after this, we have the final variable which is time, this particulate variable tells the system how much does it have to wait before starting a new loop.
+
+## Runing the code
+
+```{r}
+mysample=function(n, iter,time){
+for( i in 1:iter){
+#make a sample
+s=sample(1:10,n,replace=TRUE)
+# turn the sample into a factor
+sf=factor(s,levels=1:10)
+#make a barplot
+barplot(table(sf)/n,beside=TRUE,col=rainbow(10), 
+main=paste("Example sample()", " iteration ", i, " n= ", n,sep="") ,
+ylim=c(0,0.2)
+)
+
+#release the table
+Sys.sleep(time)
+}
+}
+
+mysample(n=1000, iter=1,time=1)
+```
+We can see plots are mostly identical between each other. this is because the fact that the same experiment was carried multiple times (the number of iterations which is 30 times). furthermore, this confirms that the method that we are doing indeed is converging into the probability that we are looking for. 
+
+# Task 5
+
+## Calculations 
+
+```{r}
+# First Proble
+choose(8,4)
+# Second Problem
+1-ppois(lambda = 2, q = 4)
+# Third Problem
+mynbin(y=10,r=3,p=0.4)
+# Fourth Problem
+pbinom(8,15,0.4)
+```
+
+# Task 6
+```{r}
+MATH4753ouTrev0002::SquareValue(3)
+```
+
+
+# Task 7
+
+

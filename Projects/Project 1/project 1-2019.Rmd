@@ -1,0 +1,144 @@
+---
+title: "Project 1"
+author: "Dr. Wayne Stewart"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    code_folding: show
+    csl: biomed-central.csl
+    df_print: paged
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
+    toc_depth: '4'
+  pdf_document:
+    df_print: kable
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    highlight: tango
+    toc: yes
+    toc_depth: 4
+#bibliography: project.bib
+abstract: This project is all about analysing the SWDEFECTS file using R and probability theory. You will need to change the headings to reflect the nature of the project intentions. Re write this abstract as the last thing you do.
+---
+
+<center>
+
+![Dr. Wayne Stewart](wayne.jpg "My Picture"){ width=20% }
+
+</center>
+
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction to the data
+
+## Data and variables(see MS pg. 77,125)
+Describe the data and the problem we wish to investigate.
+
+## Summary Table 
+
+Create the summary table (TABLE SIA3.2) found on page 125.
+
+Using $\LaTeX$ construct the formulae for 
+
+1. Accuracy
+2. Detection rate
+3. False alarm rate
+4. Precision
+
+Latex Example: See (http://www.stat.cmu.edu/~cshalizi/rmarkdown/#elements-of-math-mode)
+
+$$
+\begin{eqnarray}
+P(|X-\mu| > k) & = & P(|X-\mu|^2 > k^2)\\
+& \leq & \frac{\mathbb{E}\left[|X-\mu|^2\right]}{k^2}\\
+& \leq & \frac{\mathrm{Var}[X]}{k^2}
+\end{eqnarray}
+$$
+
+# R functions
+Using the above definitions make R functions that will create the required probabilities, please remove `eval=FALSE` when creating the functions :
+
+```{r accuracy, eval=FALSE}
+acc=function(a,b,c,d)
+{
+  
+}
+```
+
+```{r detecton, eval=FALSE}
+detect=function(b,d)
+{
+  
+}
+```
+
+```{r alarm, eval=FALSE}
+falarm=function(a,c)
+{
+  
+}
+```
+
+```{r precision, eval=FALSE}
+prec=function(c,d)
+{
+  
+}
+```
+
+
+# Create the tables in Figure SIA3.1
+
+The tables do not have to be formatted exactly as those in the book. Have the functions produce a suitable barplot also. 
+
+As a guide and help -- see code below
+
+```{r }
+swd=read.csv("swdefects.csv")
+head(swd)
+tab=with(swd, table(predict.loc.50,defect))
+barplot(tab, beside=TRUE, leg=TRUE)
+tab2=addmargins(tab)
+tab2
+```
+
+
+
+
+
+# Create the corrected table on page 127 (there are mistakes in it), TABLE SIA3.3
+
+Using the functions you have made, create the corrected table (SIA3.3) in an R chunk.
+ 
+You can call this table `tab3`
+
+Now create a function `mybar()`that will have as its input variables
+
+>
+    1. tab ( this will be a n by m table) - like `tab3`
+    2. acc ( accuracy of the decimal output ) -- like `acc=4` for example
+    
+
+    
+The function will need to create two things
+
+>
+    1. A barplot of the table
+    2. Commandline output in the form of a list containing the table
+    
+    
+![](barplot.png){ width=70% }
+

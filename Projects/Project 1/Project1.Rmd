@@ -1,0 +1,185 @@
+---
+title: "Analysis of code revison methodology techniques to detect blind spots"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    code_folding: show
+    csl: biomed-central.csl
+    df_print: paged
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
+    toc_depth: '4'
+  pdf_document:
+    df_print: kable
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    highlight: tango
+    toc: yes
+    toc_depth: 4
+#bibliography: project.bib
+abstract: In the lab, several methods to detect blind spots in code has been investigated. Through this work, it was concluded that lines of code method portraits the best detection rate with 40.8% with as well the best precision with 28.99%. On the other hand the essential complexity method is the technique that offered the best accuracy with 99.9% and the best false alarm rate with 1.18%. with this resutlts we could choose the best code to use depending on our needs. 
+---
+
+# Introduction to the data
+
+## Data and variables
+
+Code that is produce by software engineers, need to be generally revise to assure that the code would run as intended. this re-check is usually done line by line which impose a great monetary and time restrain. Therefore, Engineers have decided to work around this issue by categorizing their code in subsections: parts that are important and need to be revised and part that do not need revision as they are not as crucial. This method solve the problem of lack of resources that the project needed but at the expense of generating blind spots in the code where thing could go wrong. Such was the case in the ground software with NASA deep-space satellites where due to a blind spots a critical error on the operation of a satellites occurred.This precedent raised the question of how can someone prevent such a thing from happening again. This question was addressed by professors Tim Menzies and Justin DiStefano of the Department of Computer Science & Electrical Engineering at West Virginia University. They developed three different methods to predict when a code may be faulty. This predictions were crosschecked by applying them to an already revised source code from NASA spacecraft instrument. The results from this experiments were saved on SWDEFECTS file which is the data that we are going to use on the project. The goal of this project will be to evaluate the prediction methods given by these researches using their results and develop a probability measurement of how confident we can be on the prediction outcomes. 
+
+
+## Summary Tables
+```{r}
+#creating table
+table = matrix(NA, nrow =3 ,ncol = 3)
+#labeling the table 
+colnames(table) = c("","Module has Defect: False","Module has Defect:True")
+rownames(table) = c("Algorithm","Predicts","Defects")
+#Imputing the values of the table
+table[1,] = c("No","a","b")
+table[2,] = c("Yes","c","d")
+table[3,] = c("","","")
+#printing the table
+library(knitr)
+kable(table, caption = "Summary Table for Evaluating Defect Prediction Algorithms")
+
+```
+
+Accuracy: $P(Algorithm \ is \ Correct) = \frac{a+d}{a+b+c+d}$
+
+Detection Rate: $P(Predict \ Defect| Module \  has \ defect) = \frac{d}{b+d}$
+
+False Alarm Rate: $P(Predict \ Defect| Module \  has \ no \ defect) = \frac{c}{a+c}$
+
+Precision: $P(module \ has \ defect |predict \ defect) = \frac{d}{c+d}$
+
+# R Functions
+
+
+```{r accuracy}
+acc=function(a,b,c,d)
+{
+  (a+d)/(a+b+c+d)
+}
+```
+
+```{r detecton}
+detect=function(b,d)
+{
+  (d)/(b+d)
+}
+```
+
+```{r alarm}
+falarm=function(a,c)
+{
+  (c)/(a+c)
+}
+```
+
+```{r precision}
+prec=function(c,d)
+{
+  (d)/(c+d)
+}
+```
+
+# Create the tables in Figure SIA3.1
+
+```{r }
+#read data
+swd=read.csv("SWDEFECTS.csv")
+#check that data is correctly imputed
+head(swd)
+# getting the data for loc50 and creating the margings of it
+loc50=with(swd, table(predict.loc.50,defect))
+loc50.1=addmargins(loc50)
+# getting the data for EVG and creating the margings of it
+EVG=with(swd, table(predict.evg.14.5,defect))
+EVG.1=addmargins(EVG)
+# getting the data for IVG and creating the margings of it
+IVG=with(swd, table(predict.ivg.9.2,defect))
+IVG.1=addmargins(IVG)
+# getting the data for VG and creating the margings of it
+VG=with(swd, table(predict.vg.10,defect))
+VG.1=addmargins(VG)
+# Printing the tables with margins
+#loc50
+loc50.1
+#VG
+VG.1
+#EVG
+EVG.1
+#IVG
+IVG.1
+#Creating barplots for tables without margin
+#loc50
+barplot(loc50, beside=TRUE, leg=TRUE)
+#EVG
+barplot(EVG, beside=TRUE, leg=TRUE)
+#IVG
+barplot(IVG, beside=TRUE, leg=TRUE)
+#VG
+barplot(VG, beside=TRUE, leg=TRUE)
+```
+
+# Create the corrected table SIA3.3
+```{r}
+#Parameter for Loc50
+aloc = loc50["no","FALSE"]
+bloc = loc50["no","TRUE"]
+cloc = loc50["yes","FALSE"]
+dloc = loc50["yes","TRUE"]
+#Parameters for EVG
+aEVG = EVG["no","FALSE"]
+bEVG = EVG["no","TRUE"]
+cEVG = EVG["yes","FALSE"]
+dEVG = EVG["yes","TRUE"]
+#Parameters for IVG
+aIVG = IVG["no","FALSE"]
+bIVG = IVG["no","TRUE"]
+cIVG = IVG["yes","FALSE"]
+dIVG = IVG["yes","TRUE"]
+#Parameters for VG
+aVG = VG["no","FALSE"]
+bVG = VG["no","TRUE"]
+cVG = VG["yes","FALSE"]
+dVG = VG["yes","TRUE"]
+#Generating Table(matrix)
+table1 = matrix(NA, nrow =4 ,ncol = 4)
+#Adding labels to the table(matrix)
+colnames(table1) = c("Accuracy","Detection Rate","False Alarm Rate","Precision")
+rownames(table1) = c("Lines of code","Cyclomatic complexity","Essential complexity","Design complexity")
+#Imputing the values of the equations into the table(matrix)
+table1[1,] = c(acc(aloc,bloc,cloc,dloc),detect(bloc,dloc),falarm(aloc,cloc),prec(cloc,dloc))
+table1[3,] = c(acc(aEVG,bEVG,cEVG,dEVG),detect(bEVG,dEVG),falarm(aEVG,cEVG),prec(cEVG,dEVG))
+table1[4,] = c(acc(aIVG,bIVG,cIVG,dIVG),detect(bIVG,dIVG),falarm(aIVG,cIVG),prec(cIVG,dIVG))
+table1[2,] = c(acc(aVG,bVG,cVG,dVG),detect(bVG,dVG),falarm(aVG,cVG),prec(cVG,dVG))
+
+```
+
+```{r}
+mybar=function(tab3,acc)
+{
+  #creating barplot
+  barplot(tab3,beside=TRUE,col = rainbow(4),leg=TRUE)
+  #rounding the values on the table
+  tab3 = round(tab3,acc)
+  #printing the table
+  library(knitr)
+  kable(tab3, caption = "Probability Measures for Evaluating Defect Prediction Algorithms")
+}
+```
+```{r}
+#using the function that was previously made 
+mybar(table1,4)
+```
+
