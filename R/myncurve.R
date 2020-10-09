@@ -19,9 +19,7 @@ myncurve = function(mu, sigma,a){
   # Fill in the polygon with the given vertices
   polygon(c(mu-3*sigma,xcurve,a),c(0,ycurve,0),col="Red")
   # Area
-  prob=pnorm(a,shape1=6,shape2=3)
+  prob=pnorm(a,mean=mu,sd=sigma)
   prob=round(prob,4)
-
-  # Click to paste the text onto the graph
-  text(0.25,1.5, paste("Area = ", prob, sep=""))
+  prob
 }

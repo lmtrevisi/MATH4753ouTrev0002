@@ -1,0 +1,453 @@
+---
+title: "Assignment2"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Completed 17/17
+# 1) Problem 3.36 Pg 105-106
+
+## a)
+
+$1-P(Expert|Match) = 1-0.9212 = 0.0788 = 7.88 \%$
+
+## b)
+
+$1 - P(Novice|Match) - 1-0.7455 = 0.2545 = 25.45 \%$
+
+## c) 
+
+The participant is more likely to be a novice because the probability that a novice would fail is much higher than the probability that an expert fail identifying the finger prints. 
+
+# 2) Problem 3.52 Pg 111
+
+## given
+
+```{r}
+#creating table
+table = matrix(NA, nrow =2 ,ncol = 2)
+#labeling the table 
+colnames(table) = c("Postive","Negative")
+rownames(table) = c("User","Non-User")
+#Imputing the values of the table
+table[1,] = c(50,50)
+table[2,] = c(9,1000-100-9)
+#printing the table
+library(knitr)
+kable(table, caption = "Summary Table for testerone checking")
+
+```
+
+## a) 
+
+$P(Positive|User) = \frac{1}{2} = 50 \%$
+
+## b)
+
+$P(Negative|Non-User) = 0.99 = 99 \%$
+
+## c)
+
+$P(User) = 0.1$
+$P(Non-User) = 0.9$
+$P(Positive|Non-User) = 0.01$
+
+$P(User|Positive) = \frac{P(User) * P(Positive|User)}{P(User)*P(Positive|User)+P(Non-User)*P(Positive|Non-User)} = \frac{0.1*0.5}{0.1*0.5+0.9*0.01} = 0.8474576$
+
+# 3) Theorem 3.1 Pg 113
+
+lets say that set one has length p and set two has length y  
+
+the number of possible ways that a single element from the first set can be combined with all the elements of the second set would be equal to the length of the second set. if we repeat this for all elements of set one we find out that we would have y*p number of possible combination if one random element is chosen from each set.
+
+lets say that set one has length p, set two has length y and set three has length x.
+
+now following this same procedure we can fix the element of set one and two and change set three. this would give use x number of possible combination of a given fix element on set one and two. then by changing one of the other elements in a single set at a time we can quickly realize that the number of possible combinations between this three sets would be x*y*p.
+
+Now, this pattern would extrapolate to higher number of set combinations implying that the number of possible ways that one random element from each subset would be chosen is equal to the multiplication of the lengths of each set. 
+
+# 4) Theorem 3.2 Pg 114
+
+In this problem we would like to find how many distinct ways we can choose n elements from a set with N elements.
+
+in this case, we will look at each pick individually until we get n elements. for the first pick we would have N possible elements to choose from. now for the second element we would have one less choice thus having N-1 possible options to pick. The third element will have one less possible choice compared the second pick thus having N-2 Possible combinations. this pattern would repeat until we arrive to the n pick which would have N-n+1 possibilities. Thus, to find the number of possible ways to pick this n elements from a set with N elements we need to use Theorem 3.1. in this theorem the length of each subset would be the length that we just found for each pick and the number of sets would be the number of picks that we are doing. using this theorem we would get the following equation ${N \choose n} = N*(N-1)*(N-2)* \cdots *(N-n+1)$ which can be rewritten as ${N \choose n} = \frac{N!}{(N-n)!}$
+
+# 5) Theorem 3.3 Pg 116
+
+the way that we can arrange N different elements in k positions is $N!$ which by using theorem 3.1 would become $(A)(n_1!)(n_2!)\cdots(n_k!)$ now by rearranging we get 
+
+$A = \frac{N!}{n_1!n_!\cdots n_k!}$
+
+# 6) Theorem 3.4 Pg 117
+
+the ways that we can choose n elements from N is 
+
+$\frac{N*(N-1)* \dots * (N-n+1)}{n!}$
+ 
+ but this is equal to N down n over n factorial which is equal to 
+ 
+ $\frac{N!}{n!(N-n)!}$
+ 
+# 7) Problem 4.2 Pg 138
+
+## a)
+
+```{r}
+0.09+0.3+0.37+0.2+0.04
+```
+So all Y was indeed add to one
+
+## b)
+
+$P(3\cup 4) = P(3) + P(4) = 0.2+0.04 = 0.24 = 24\%$
+
+## c) 
+$P(0 \cup 1) = P(0) + P(1) = 0.09+0.3 = 0.39 = 39\%$
+
+# 8) Problem 4.12 Pg 143
+
+```{r}
+#creating table
+table = matrix(NA, nrow =21 ,ncol = 2)
+#labeling the table 
+colnames(table) = c("# Apps","p(y)")
+#Imputing the values of the table
+table[,1] = c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)
+table[,2] = c(0.17,0.1,0.11,0.11,0.1,0.1,0.07,0.05,0.03,0.02,0.02,0.02,0.02,0.02,0.01,0.01,0.01,0.01,0.01,0.005,0.005)
+#printing the table
+library(knitr)
+kable(table, caption = "Summary Table for testerone checking")
+```
+
+
+## a)
+
+firstly we can see that the sample space is finite as the sample space $\Omega = \{1,2,3,\cdots,20 \}$. Thus, we can say that the random variable is discrete
+
+## b) 
+
+```{r}
+0.02+0.02+0.02+0.02+0.01+0.01+0.01+0.01+0.01+0.005+0.005
+```
+
+## c)
+
+```{r}
+# mean 
+mean = 0
+for (i in 1:21){
+mean = mean + c(table[i,1])*c(table[i,2])
+}
+mean
+
+# Variance
+EX2 = 0
+for (i in 1:21){
+  EX2 =  EX2 + (c(table[i,1]))^2*c(table[i,2])
+}
+var = EX2-(mean^2)
+var
+
+
+```
+## d) 
+
+$P(|X-\mu| \geq \epsilon) \leq \frac{Var(X)}{\epsilon^2}$
+
+which can be re-arrange as 
+
+$P(-\epsilon+\mu \leq X \leq \epsilon+\mu ) \geq 1-\frac{Var(X)}{\epsilon^2}$
+
+and we are looking that $1-\frac{Var(X)}{\epsilon^2} = 0.75$
+
+$\therefore \epsilon = \sqrt{\frac{Var(X)}{1+0.75}}  = \sqrt{\frac{19.85597}{1.75}} = 3.368423$
+
+thus the interval would be 
+
+$-\epsilon+\mu \leq X \leq \epsilon + \mu$ which is $-3.368423 +4.655 \leq X \leq -3.368423 +4.655$
+
+Thus, the interval is 
+
+$$1.286577 \leq X \leq 8.023423 $$
+
+# 9) Problem 4.34 Pg 154
+
+if we used a bernoulli model assuming that been an international is a success and been a national is a failure, 
+
+p: Probability of been international
+q: probability of been national
+
+where 
+$p = 0.7$ and $q=0.3$
+
+## a)
+
+$P(y) ={n \choose y} p^yq^{n-y}$
+
+$\therefore P(y=10) = {25 \choose 10} 0.7^{10}*q^{25-10}$
+
+$$ P(y) = 0.001324897$$
+
+## b) 
+
+the lower tail is
+```{r}
+pbinom(5,25,0.7)
+
+```
+
+
+## c) 
+
+mean
+
+$mean = n*p = 25*0.7 = 17.5$
+
+$STD = n*p*q = \sqrt{25*0.7*0.3} = 2.291288$
+
+## d)
+
+we see from the results in part c that from a sample space of 25 PhD students, around 17.5 would be international. furthermore we see that how widely spread the data is equivalent to 2.29 (Standard Deviation). in this is case it is low which mean that the data is concentrated around the mean (empirical rule).
+
+# 10) Problem 4.46 Pg 158
+
+## a)
+```{r}
+factorial(50)/(factorial(5)^10)*(0.1^5)^10
+```
+
+## b)
+
+```{r}
+dbinom(0,50,0.1)+dbinom(1,50,0.1)
+```
+
+
+# 11) Problem 4.54 Pg 162
+
+## a)
+
+it is a geometrical distribution $P(y) = p*q^{(y-1)}$
+
+## b)
+
+$E(y) = \mu = \frac{1}{p}=\frac{1}{0.4}$
+
+so the expected value would be the inverse of the success probability. which mean that as the success rate is lower more trials will be needed before obtaining the first success
+ 
+## c)
+
+$P(y=1) = p*q^{(y-1)} = p = 0.4$
+
+```{r}
+library(MATH4753ouTrev0002)
+mynbin(1,1,0.4)
+```
+
+## d)
+
+```{r}
+library(MATH4753ouTrev0002)
+1-mynbin(1,1,0.4)-mynbin(2,1,0.4)
+
+```
+ # 12) Problem 4.66 Pg 168
+ 
+ ## a)
+ 
+```{r}
+10*8/209
+```
+ 
+## b)
+```{r}
+
+dhyper(4,8,201,10)
+```
+
+# 13) Problem 4.78 Pg 173
+
+## a)
+
+Var = 0.03
+
+## b)
+
+to make sure that the assumption is right we need to check that all of the characteristic of a poisson distribution are meet. firstly we can see that  we are counting the number of victims occur in a time lapse of three years. this meet the first criterion for poisson. second. the researchers would need to assume that the probability of death is the same for all units. and lastly, the researches would need to assume that the random variables are independent from other units. 
+
+## c)
+
+```{r}
+dpois(0,0.03)
+```
+
+# 14) Problem 5.2 Pg 191
+
+## a)
+
+$1 = \int_{0}^{1}2*c-c*y dy$
+
+$\therefore 1= [2*c*y-\frac{c*y^2}{2}]^{1}_{0}$
+
+$1 = 2*c-\frac{c}{2}$
+
+$\therefore c = \frac{1}{2-\frac{1}{2}} = \frac{2}{3}$
+
+## b) 
+
+$F(y)= \int _{-\infty}^{y}(\frac{4}{3}-\frac{2}{3}*y) dy$
+
+## c)
+
+$[\frac{4}{3}*y-\frac{2*y^2}{6}]^{0.4}_{0}$
+
+```{r}
+  f <- function(x) {(4/3)-(2/3)*x}
+integrate(f,0,0.4)
+```
+
+## d)
+
+$[\frac{4}{3}*y-\frac{2*y^2}{6}]^{0.6}_{0.1}$
+```{r}
+ f <- function(x) {(4/3)-(2/3)*x}
+integrate(f,0.1,0.6)
+```
+
+
+# 15) Problem 5.10 Pg 191
+
+## a)
+$E(Y) = \int_{-\infty}^{\infty} y*f(y)*dy$
+```{r}
+ f <- function(x) {x*((3/500)*(25-x^2))}
+mu =integrate(f,-5,5)
+integrate(f,-5,5)
+```
+
+$E(Y^2) = \int_{-\infty}^{\infty} y^2*f(y)*dy$
+```{r}
+f <- function(x) {x^2*((3/500)*(25-x^2))}
+EX2 = integrate(f,-5,5)
+integrate(f,-5,5)
+```
+$Var(Y) = E(Y^2)-E(Y)^2$
+```{r}
+ f <- function(x) {x*((3/500)*(25-x^2))}
+mu =c(integrate(f,-5,5))
+f <- function(x) {x^2*((3/500)*(25-x^2))}
+EX2 = c(integrate(f,-5,5))
+Var =EX2$value-mu$value^2 
+Var
+```
+
+## b)
+
+$E(cX) = cE(X)$
+
+$V(cX) = c^2V(X)$
+
+so, in minutes $c = \frac{1}{60}$
+
+the mean in minutes is:
+
+```{r}
+ f <- function(x) {x*((3/500)*(25-x^2))}
+mu =c(integrate(f,-5,5))
+mu$value/60
+```
+
+the variance in minutes
+
+```{r}
+f <- function(x) {x^2*((3/500)*(25-x^2))}
+EX2 = c(integrate(f,-5,5))
+EX2$value/(60^2)
+```
+
+## c)
+
+$E(cX) = cE(X)$
+
+$V(cX) = c^2V(X)$
+
+so, in seconds $c = 60$
+
+the mean in seconds is is:
+
+```{r}
+ f <- function(x) {x*((3/500)*(25-x^2))}
+mu =c(integrate(f,-5,5))
+mu$value*60
+```
+
+the variance in seconds
+
+```{r}
+f <- function(x) {x^2*((3/500)*(25-x^2))}
+EX2 = c(integrate(f,-5,5))
+EX2$value*(60^2)
+```
+
+# 16) Problem 5.36 Pg 205
+
+## a) 
+
+```{r}
+1-pnorm(45,50,3.2)
+```
+## b)
+
+```{r}
+pnorm(55,50,3.2)
+```
+## c)
+
+```{r}
+pnorm(52,50,3.2)-pnorm(51,50,3.2)
+```
+
+# 17) Problem 5.38 Pg 205
+
+## a)
+
+```{r}
+
+pnorm(700,605,185)-pnorm(500,605,185)
+```
+
+## b)
+
+```{r}
+pnorm(500,605,185)-pnorm(400,605,185)
+```
+
+## c)
+
+```{r}
+pnorm(850,605,185)
+```
+
+## d) 
+
+```{r}
+1-pnorm(1000,605,185)
+```
+
+## e)
+
+```{r}
+qnorm(1-0.1,605,185)
+```
+
