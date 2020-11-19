@@ -1,0 +1,167 @@
+---
+title: "Lab7"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 1
+
+```{r}
+getwd()
+```
+
+# Task 2
+
+## Making the four plots
+
+```{r}
+library(MATH4753ouTrev0002)
+mychisim(n1=10,iter=1000,mean1=10,sigma1=4,ymax=0.12,y=0.08)
+mychisim(n1=20,iter=1000,mean1=10,sigma1=4,ymax=0.08,y=0.06,x=30)
+mychisim(n1=100,iter=1000,mean1=10,sigma1=4,ymax=0.04,y=0.03,x=120)
+mychisim(n1=200,iter=1000,mean1=10,sigma1=4,ymax=0.025,y=0.02,x=230)
+```
+
+## Place output in object and making histogram
+
+```{r}
+chisq<-mychisim(n1=10,iter=1500,mean1=20,sigma1=10)
+hist(chisq$w)
+```
+
+# Task 3
+
+## Make the plots
+
+```{r}
+library(MATH4753ouTrev0002)
+myTsim(n1=10,iter=1000,mean1=10,sigma1=4,ymax=0.4,y=0.3,x=2)
+myTsim(n1=20,iter=1000,mean1=10,sigma1=4,ymax=0.42,y=0.3,x=2)
+myTsim(n1=100,iter=1000,mean1=10,sigma1=4,ymax=0.45,y=0.3,x=2)
+myTsim(n1=200,iter=1000,mean1=10,sigma1=4,ymax=0.42,y=0.3,x=2)
+```
+
+
+## Place output in object and making histogram
+
+```{r}
+T<-myTsim(n1=10,iter=1500,mean1=20,sigma1=10)
+hist(T$w)
+```
+
+# Task 4
+
+## Make the plots
+
+```{r}
+library(MATH4753ouTrev0002)
+mychisim2(n1=10,n2=10,mean1=5,mean2=10,sigma1=4,sigma2=4,iter=1000,ymax=0.07,y=0.05,x=30)
+mychisim2(n1=20,n2=20,mean1=3,mean2=5,sigma1=10,sigma2=10,iter=1000,ymax=0.06,y=0.04,x=50)
+mychisim2(n1=50,n2=50,mean1=5,mean2=10,sigma1=4,sigma2=4,iter=10000,ymax=0.04,y=0.02,x=120)
+mychisim2(n1=80,n2=50,mean1=3,mean2=5,sigma1=10,sigma2=10,iter=10000,ymax=0.03,y=0.02,x=160)
+```
+
+## Place output in object and making histogram
+
+```{r}
+chisq2<-mychisim2(iter=10000)
+hist(chisq2$w)
+```
+
+# Task 5
+
+## place the legend where you click with the mouse
+ 
+ we do this by changing x,y by the function locator(1), nevertheless this cannot be done on the markdown as it would need user interaction. this code would only work on an r file. Thus, it is not shown above but explain. 
+
+## write down the student’s T statistic 
+
+$T = \frac{(\bar{Y_1}-\bar{Y_2})-(\mu_1-\mu_2)}{S_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$
+
+$S_p^2 = \frac{(n_1-1)*S_1^2+(n_2-1)*S_2^2}{n_1+n_2-2}$
+
+where: 
+
+$\bar{Y_1}$ is the mean of the sample 1
+
+$\bar{Y_2}$ is the mean of the sample 2
+
+$\mu_1$ is the mean of the population 1
+
+$\mu_2$ is the mean of the population 2
+
+$S_p$ pooled sample standard deviation
+
+$n_1$ is the sample size of 1
+
+$n_2$ is the sample size of 2
+
+$S_1$ sample standard deviation 1
+
+$S_2$ sample standard deviation 2
+
+## Make Plots
+
+```{r}
+library(MATH4753ouTrev0002)
+myTsim2(n1=10,n2=20,mean1=5,mean2=10,sigma1=4,sigma2=4, iter=1000,ymax= 0.5,y=0.4,x= -4 )
+myTsim2(n1=20,n2=20,mean1=3,mean2=5,sigma1=10,sigma2=10, iter=1000,ymax= 0.5,y=0.4,x= -4 )
+myTsim2(n1=50,n2=50,mean1=5,mean2=10,sigma1=4,sigma2=4, iter=10000,ymax= 0.5,y=0.4,x= -4 )
+myTsim2(n1=80,n2=50,mean1=3,mean2=5,sigma1=10,sigma2=10, iter=10000,ymax= 0.5,y=0.4,x= -4 )
+```
+
+## Place output in object and making histogram
+
+```{r}
+T2<-myTsim2(iter=10000)
+hist(T2$w)
+```
+
+# Task 6
+
+## statistic that the function will calculate
+
+the function would calculated: $F = (\frac{S_1^2}{S_2^2})(\frac{\sigma_1^2}{\sigma_2^2})$
+which is the ratio of the sample variances times the ratio of the population variances
+
+## 	What assumptions are made?
+
+it is assumed that chi-squared random variables are independent 
+
+## Make four plots with different parameters
+
+```{r}
+library(MATH4753ouTrev0002)
+myFsim2(n1=10,n2=20,mean1=5,mean2=10,sigma1=4,sigma2=4, iter=1000,ymax= 0.9,y=0.4,x= 2 )
+myFsim2(n1=20,n2=20,mean1=3,mean2=5,sigma1=10,sigma2=10, iter=1000,ymax= 1.1,y=0.8,x= 2 )
+myFsim2(n1=50,n2=50,mean1=5,mean2=10,sigma1=4,sigma2=4, iter=10000,ymax= 1.5,y=1,x= 2 )
+myFsim2(n1=80,n2=50,mean1=3,mean2=5,sigma1=10,sigma2=10, iter=10000,ymax= 1.7,y=1,x= 2 )
+```
+
+## Place output in object and making histogram
+
+```{r}
+F2<-myTsim2()
+hist(F2$w)
+```
+
+# Task 7
+
+```{r}
+library(MATH4753ouTrev0002)
+data("fire")
+knitr::kable(head(fire))
+```
+

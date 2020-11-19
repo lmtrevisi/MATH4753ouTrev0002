@@ -1,0 +1,326 @@
+---
+title: "Lab9"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 1
+
+```{r}
+getwd()
+```
+
+# Task 2
+
+## meaning of lines
+
+A: this line takes n*iter samples from x with replacement and store them on the variable y.
+
+B: this line produces sample quantiles from xstat corresponding to the probabilities $\frac{\alpha}{2}$ and $1-\frac{\alpha}{2}$
+
+## The sample() function should be studied a little further. As used in the myboot() function, each datum in x will be selected with equal probability. Why is this necessary?
+
+it is necessary because the sample taken cannot be biased. thus, they have to be selected randomly. 
+
+## Issuing R Lines
+
+```{r}
+set.seed(35) # This will give everyone the same sample
+sam=round(rnorm(20,mean=10,sd=4),2)
+unique(sample(sam,20,replace=TRUE) ) # repeat this line 5Xs
+unique(sample(sam,20,replace=TRUE) )
+unique(sample(sam,20,replace=TRUE) )
+unique(sample(sam,20,replace=TRUE) )
+unique(sample(sam,20,replace=TRUE) )
+```
+In this sample, it can be seen that the number of unique samples change from trial to trial. This can be due to the replacement been true which mean that a single number can appear twice. also sample number are not the same trough the trials becuase they are choosen randomly.
+
+```{r}
+set.seed(35) # This will give everyone the same sample
+sam=round(rnorm(20,mean=10,sd=4),2)
+unique(sample(sam,20,replace=FALSE) ) # repeat this line 5Xs
+unique(sample(sam,20,replace=FALSE) )
+unique(sample(sam,20,replace=FALSE) )
+unique(sample(sam,20,replace=FALSE) )
+unique(sample(sam,20,replace=FALSE) )
+```
+
+in this trial, all the samples have the same length. this is because the replacement feature is off which meant that a single number cannot be choose twice within a sample. neverthless the number are not always the same because they are still choosen randomly
+
+## Issue sample(sam,21,replace=FALSE) what happens? Why?
+
+in this case the sample that wants to be taken are larger that the population size (sam). Thus, because we have not replacement, all the 21 samples cannot be taken. the maximun possible sample size would 20 for this case. thus we would get an error. 
+
+# Task 3
+
+# mean plots
+
+```{r}
+library(MATH4753ouTrev0002)
+set.seed(39)
+sam=rnorm(25,mean=25,sd=10)
+myboot2(10000,x=sam,fun="mean",alpha=0.05,xlab="mean",col="Purple",cx=1.5)
+mean(sam)
+```
+
+```{r}
+library(MATH4753ouTrev0002)
+set.seed(30)
+sam=sam=rchisq(20,df=3)
+myboot2(10000,x=sam,fun="mean",alpha=0.05,xlab="mean",col="Purple",cx=1.5)
+mean(sam)
+```
+
+```{r}
+set.seed(40)
+sam=rgamma(30,shape=2,scale=3)
+myboot2(10000,x=sam,fun="mean",alpha=0.05,xlab="mean",col="Purple",cx=1.5)
+mean(sam)
+```
+
+```{r}
+set.seed(10)
+sam=rbeta(20,shape1=3,shape2=4)
+myboot2(10000,x=sam,fun="mean",alpha=0.05,xlab="mean",col="Purple",cx=1.5)
+mean(sam)
+```
+
+##	In each of the above cases how close is the point estimate to the population value? 
+
+as it can be seen above, the estimates are really close to the actual mean. thus the approximations are good. 
+
+## In each of the above cases does the interval contain the population value? 
+
+for normal: mean = 25
+
+for chisq: mean = v = df = 3
+
+for gamma: mean = alpha*beta = shape*scale=2*3 = 6
+
+for beta: mean = (a)/(a+b) = (shape1)/(shape1+shape2) = 3/(3+4) = 3/7=0.4286
+
+as i can be seen from he calculated and the population means, the population value is indeed containing the population value
+
+## Variance Plots
+
+
+```{r}
+library(MATH4753ouTrev0002)
+set.seed(39)
+sam=rnorm(25,mean=25,sd=10)
+myboot2(10000,x=sam,fun="var",alpha=0.2,xlab="Variance",col="Purple",cx=1.5)
+
+```
+
+```{r}
+library(MATH4753ouTrev0002)
+set.seed(30)
+sam=sam=rchisq(20,df=3)
+myboot2(10000,x=sam,fun="var",alpha=0.2,xlab="Variance",col="Purple",cx=1.5)
+
+```
+
+```{r}
+set.seed(40)
+sam=rgamma(30,shape=2,scale=3)
+myboot2(10000,x=sam,fun="var",alpha=0.2,xlab="Variance",col="Purple",cx=1.5)
+
+```
+
+```{r}
+set.seed(10)
+sam=rbeta(20,shape1=3,shape2=4)
+myboot2(10000,x=sam,fun="var",alpha=0.2,xlab="Variance",col="Purple",cx=1.5)
+
+```
+
+# Taks 4
+```{r}
+sam=c(1,1,1,2,2,2,2,3,3,3,4,4) 
+obj = myboot2(x=sam,fun="median")
+# barplot of xstat
+barplot(obj$x)
+#bootstrap interval (L,U)
+obj$ci
+```
+
+
+# Task 5
+
+## fixing code and 95%
+```{r}
+library(MATH4753ouTrev0002)
+mynew = function(x){ mean(x)/median(x)}
+
+set.seed(39)
+sam=rnorm(25,mean=25,sd=10)
+myboot2(10000,x=sam,fun="mynew",alpha=0.05,xlab="mean/median",col="Purple",cx=1.5)
+
+set.seed(30)
+sam=sam=rchisq(20,df=3)
+myboot2(10000,x=sam,fun="mynew",alpha=0.05,xlab="mean/median",col="Purple",cx=1.5)
+
+
+
+
+set.seed(40)
+sam=rgamma(30,shape=2,scale=3)
+myboot2(10000,x=sam,fun="mynew",alpha=0.05,xlab="mean/median",col="Purple",cx=1.5)
+
+
+
+
+set.seed(10)
+sam=rbeta(20,shape1=3,shape2=4)
+myboot2(10000,x=sam,fun="mynew",alpha=0.05,xlab="mean/median",col="Purple",cx=1.5)
+
+
+```
+
+## 70% interval 
+
+```{r}
+
+library(MATH4753ouTrev0002)
+mynew = function(x){ mean(x)/median(x)}
+
+set.seed(39)
+sam=rnorm(25,mean=25,sd=10)
+myboot2(10000,x=sam,fun="mynew",alpha=0.3,xlab="mean/median",col="Purple",cx=1.5)
+
+
+
+
+set.seed(30)
+sam=sam=rchisq(20,df=3)
+myboot2(10000,x=sam,fun="mynew",alpha=0.3,xlab="mean/median",col="Purple",cx=1.5)
+
+
+
+
+set.seed(40)
+sam=rgamma(30,shape=2,scale=3)
+myboot2(10000,x=sam,fun="mynew",alpha=0.3,xlab="mean/median",col="Purple",cx=1.5)
+
+
+
+
+set.seed(10)
+sam=rbeta(20,shape1=3,shape2=4)
+myboot2(10000,x=sam,fun="mynew",alpha=0.3,xlab="mean/median",col="Purple",cx=1.5)
+
+
+```
+
+# Task 6
+
+## distributions
+
+geom  weibull unif pois
+
+## make samples
+
+```{r}
+sam1 = rgeom(20,0.5)
+sam2 = rweibull(20,2,1)
+sam3 = runif(20,0,1)
+sam4 = rpois(20,3)
+```
+
+## Intervals 
+
+geom 
+
+```{r}
+myboot2(10000,x=sam1,fun="mean",alpha=0.2,xlab="mean",col="Purple",cx=1.5)
+myboot2(10000,x=sam1,fun="var",alpha=0.2,xlab="variance",col="Purple",cx=1.5)
+```
+
+weibull 
+
+```{r}
+myboot2(10000,x=sam2,fun="mean",alpha=0.2,xlab="mean",col="Purple",cx=1.5)
+myboot2(10000,x=sam2,fun="var",alpha=0.2,xlab="variance",col="Purple",cx=1.5)
+```
+
+unif
+
+```{r}
+myboot2(10000,x=sam3,fun="mean",alpha=0.2,xlab="mean",col="Purple",cx=1.5)
+myboot2(10000,x=sam3,fun="var",alpha=0.2,xlab="variance",col="Purple",cx=1.5)
+```
+
+pois
+
+```{r}
+myboot2(10000,x=sam4,fun="mean",alpha=0.2,xlab="mean",col="Purple",cx=1.5)
+myboot2(10000,x=sam4,fun="var",alpha=0.2,xlab="variance",col="Purple",cx=1.5)
+```
+
+# Task 7
+
+## create bootstrap intervals using two statistics that you find interesting
+
+```{r}
+set.seed(68)
+sam=rnorm(20,mean=10,sd=4) 
+myboot2(10000,x=sam,fun="IQR",alpha=0.2,xlab="mean",col="Purple",cx=1.5)
+```
+
+```{r}
+set.seed(68)
+sam=rnorm(20,mean=10,sd=4) 
+myboot2(10000,x=sam,fun="sd",alpha=0.2,xlab="mean",col="Purple",cx=1.5)
+```
+
+## calculation using theorem
+
+calculating $z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt{n}}$
+```{r}
+set.seed(68)
+n=20
+alpha = 0.05
+sd=4
+mean = 10
+sam=rnorm(n,mean,sd)
+za2= qnorm(1-alpha/2,mean=0,sd=1)
+int = za2*sd/sqrt(n)
+#lower bound
+10-int
+#upper bound
+10+int
+
+```
+## using my boot
+```{r}
+set.seed(68)
+n=20
+alpha = 0.05
+sd=4
+mean = 10
+sam=rnorm(n,mean,sd)
+myboot2(10000,x=sam,fun="mean",alpha,xlab="mean",col="Purple",cx=1.5)
+```
+
+## How do they compare?
+
+their values are really close to each other. it seems that when using the theorem the bounds are a little lower than when using myboot2 function. also it is important to notice that the means are not the same for this two methods.  
+
+# Task 8
+
+```{r}
+obj = MATH4753ouTrev0002::myboot2(x=fire$DISTANCE)
+```
+

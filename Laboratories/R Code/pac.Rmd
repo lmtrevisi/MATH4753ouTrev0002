@@ -1,0 +1,79 @@
+---
+title: "R package"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+
+
+Congratulations for getting this far. To complete the evidence that you have made a working R package please answer the following by using the supplied rmd  and upload the knitted html to CANVAS.
+
+I will assume your package is called **MYPAC** and you have packaged and documented functions `myf1`, `myf2`, `myf3` and `myf4`.
+
+Your actual package name and functions will obviously be called something else.
+
+# First function
+
+Please place your first function in the r chunk in the following way:
+
+Once you are ready please remove the option `eval = FALSE`
+
+```{r first, eval = FALSE}
+MATH4753ouTrev0002::myhyper(100,10,5,8)
+
+```
+
+
+# Second function
+
+Please place your second function in the r chunk in the following way:
+
+Once you are ready please remove the option `eval = FALSE`
+
+```{r second, eval = FALSE}
+MATH4753ouTrev0002::myci(x=rnorm(7,mean=3,sd=1),conf.int=0.95)
+
+```
+
+
+# Third function
+
+Please place your third function in the r chunk in the following way:
+
+Once you are ready please remove the option `eval = FALSE`
+
+```{r third, eval = FALSE}
+MYPAC::myf3(option1 = , option2 = , etc)
+
+```
+
+
+# Forth function
+
+Please place your forth function in the r chunk in the following way:
+
+Once you are ready please remove the option `eval = FALSE`
+
+```{r forth, eval = FALSE}
+MYPAC::myf4(option1 = , option2 = , etc)
+
+```
+
+# The github repository
+
+
+
+This is the address of my GITHUB repository:
+<https://github.com/MATHSTATSOU/Intro2R.git>
+
+Replace this with your own address.
