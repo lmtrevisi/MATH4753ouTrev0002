@@ -1,0 +1,28 @@
+---
+title: "Exam2"
+author: "Luis Mario Trevisi"
+date: "13/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+S=read.csv("SHALLOW.csv")
+
+t.test(S$Actual,S$Predict,paired=TRUE,conf.level=0.99)
+
+cov(S$Actual,S$Predict)/(sd(S$Actual)*sd(S$Predict))
+
+```
+
+
+
+```{r}
+S=read.csv("mow-mow.csv")
+var.test(S$y1,S$y2,conf.level =0.8 )
+d=S$y1-S$y2
+t.test(S$y1,S$y2,var.equal=FALSE,conf.level=0.92)$conf
+```
+

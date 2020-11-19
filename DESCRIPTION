@@ -11,3 +11,9 @@ LazyData: true
 URL: https://github.com/lmtrevisi/MATH4753ouTrev0002
 BugReports: https://github.com/lmtrevisi/MATH4753ouTrev0002/issues
 RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

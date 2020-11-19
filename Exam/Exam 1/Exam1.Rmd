@@ -1,0 +1,57 @@
+---
+title: "Exam1"
+author: "Luis Mario Trevisi"
+date: '`r format(Sys.Date(),format="%A, %B %d, %Y")`'
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+```{r}
+getwd()
+```
+
+```{r}
+MTBE = read.csv("MTBE.csv")
+MTBE =with(ddt,table(MTBE$WellClass,MTBE$Aquifier))
+MTBE
+```
+```{r}
+MTBE = read.csv("MTBE.csv")
+MTBE =with(ddt,table(MTBE$WellClass,MTBE$MTBE.Detect))
+MTBE
+
+```
+
+```{r}
+EPAGAS = read.csv("EPAGAS.csv")
+mpg = EPAGAS$MPG
+z = (mpg-mean(mpg))/sd(mpg)
+mpg[abs(z)>=2 & abs(z)<=3]
+```
+```{r}
+EPAGAS = read.csv("EPAGAS.csv")
+mpg = EPAGAS$MPG
+z = (mpg-mean(mpg))/sd(mpg)
+length(mpg[abs(z)<=3])/length(z)
+```
+
+```{r}
+mean(mpg)+sd(mpg)
+```
+
+```{r}
+pnorm(13,12,4)-pnorm(8,12,4)
+```
+

@@ -1,0 +1,778 @@
+---
+title: "Assignment3"
+author: "Luis Mario Trevisi"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# 15/15
+
+# MS 5.54 - Page 215 
+
+## a)
+
+$\mu = 95s = 1.5833 min$
+
+if exponential $\sigma^2 = 9025s^2 = 2.5069 min^2$
+
+$P(y>=2) = 1- \int_0^2 \frac{e^{\frac{-y}{\beta}}}{\beta}$
+
+$P(y>=2) = 1-[-e^{\frac{-y}{\beta}}]_0^2$
+
+$P(y>=2) = 1+e^\frac{-2}{1.5833}-e^0$
+
+$P(y>=2) = 0.2827$
+
+## b) 
+
+as it was stated above, if the sample follows an exponential trend the mean and standard deviation would be 
+
+$\mu = 95s = 1.5833 min$
+
+if exponential $\sigma = 9025s^\frac{1}{2} = 95 s = 1.5833 min$
+
+now if we calculate this values using r from the data that was given
+```{r}
+PHISHING.df = read.csv("PHISHING.csv")
+mean(PHISHING.df$INTTIME)
+sd(PHISHING.df$INTTIME)
+```
+this implies that the data does not match exactly the model as the theoretical standard deviation is not the same as the experimental one. nevertheless they are really close and the means are the same thus, giving it potential to be use as an approximation model.
+
+# MS 5.56 - Page 215 
+
+## given:
+
+$\alpha = 3$ and $\beta = 0.07$
+
+## a)
+
+following the gamma probability distribution
+
+$\mu = \alpha * \beta = 3*0.07 = 0.21$
+
+$\sigma^2 = \alpha* \beta^2 = 3*0.07^2 = 0.0147$
+
+## b)
+
+firstly, by the empirical rule almost all the data would be within 3 standard deviation of the mean ($>95%$). thus,
+
+$3*\sigma = 3*0.0147 = 0.0441$
+
+which mean that
+
+$\mu+3*\sigma = 0.21+0.0441 = 0.2541$
+
+$\mu-3*\sigma = 0.21-0.0441 = 0.1659$
+
+thus, because 0.6 is significantly out of this limits, 0.6 it is definite an outlier.
+
+# MS 5.60 - Page 216
+
+## given:
+
+formula A: $\alpha = 2$ and $\beta = 2$
+
+formula B: $\alpha = 1$ and $\beta = 4$
+
+## a)
+
+for formula A:
+
+$\mu = \alpha*\beta = 2*2 = 4$
+
+for formula B:
+
+$\mu = \alpha*\beta = 1*4 = 4$
+
+## b)
+
+for formula A:
+
+$\sigma^2 = \alpha*\beta^2 = 2*2^2 = 8$
+
+for formula B:
+
+$\sigma^2 = \alpha*\beta^2 =1*4^2 = 16$
+
+## c)
+
+$\Gamma(\alpha) = \int_0^\infty y^{\alpha-1}*e^{-y} dy$
+
+for formula A:
+
+$\Gamma(\alpha) = \int_0^\infty y^{2-1}*e^{-y} dy$
+
+$\Gamma(\alpha) = \int_0^\infty y^{1}*e^{-y} dy$
+
+$\Gamma(\alpha) = [-y*e^{-y}-e^{-y}]_0^\infty$
+
+$\Gamma(\alpha) = 1$
+
+for formula B:
+
+$\Gamma(\alpha) = \int_0^\infty y^{1-1}*e^{-y} dy$
+
+$\Gamma(\alpha) = \int_0^\infty e^{-y} dy$
+
+$\Gamma(\alpha) = [-e^{-y}]_0^\infty$
+
+$\Gamma(\alpha) = 1$
+
+now if we calculate the probabilities
+
+$P(<=x) = \int_0^x \frac{y^{\alpha-1}*e^{-\frac{y}{\beta}}}{\beta^\alpha *\Gamma(\alpha) } dy$
+
+for formula A:
+
+$P(<=1) = \int_0^1 \frac{y^{2-1} * e^{\frac{-y}{2}}}{2^2 *1} dy$
+
+$P(<=1) =\int_0^1 \frac{y^{1} * e^{\frac{-y}{2}}}{4 *1} dy$
+
+$P(<=1) = [- \frac{1}{2} e^{-\frac{y}{2}}*(y+2)]_0^1$
+
+$P(<=1) = 0.09020$
+
+for formula B:
+
+$P(<=1) = \int_0^1 \frac{y^{1-1} * e^{\frac{-y}{4}}}{4^1 *1} dy$
+
+$P(<=1) =\int_0^1 \frac{y^{0} * e^{\frac{-y}{4}}}{4 *1} dy$
+
+$P(<=1) = [-e^{-\frac{y}{4}}]_0^1$
+
+$P(<=1) = 0.22119$
+
+thus the formula that has higher probability is formula B. 
+
+# 5.74 - Page 219
+
+## given: 
+
+$\alpha = 2$ and $\beta = 4$
+
+## a)
+
+$F(y_o) = \int_0^{y_0} \frac{\alpha}{\beta} * y^{\alpha-1}*e^{-\frac{y^\alpha}{\beta}} dy$
+
+thus,
+
+$P(Y<2) = F(2) = \int_0^{2} \frac{2}{4} * y^{2-1}*e^{-\frac{y^2}{4}} dy$
+
+$P(Y<2) = F(2) = \int_0^{2} \frac{1}{2} * y^{1}*e^{-\frac{y^2}{4}} dy$
+
+$P(Y<2) = F(2) = [-e^{-\frac{y^2}{4}}]_0^2$
+
+$P(Y<2) = F(2) = 0.63212$
+
+## b)
+
+assuming that it is weibull
+
+mean:
+
+$\mu = \beta^\frac{1}{\alpha}*\Gamma(\frac{\alpha+1}{\alpha})$
+
+$\frac{\alpha+1}{\alpha} = \frac{2+1}{2} = \frac{3}{2}$
+
+$\Gamma(\alpha) = \int_0^\infty y^{\frac{3}{2}-1}*e^{-y} dy$
+
+$\Gamma(\alpha) = \int_0^\infty y^{\frac{1}{2}}*e^{-y} dy$
+
+$\Gamma(\alpha) = 0.886227$
+
+$\mu = 4^\frac{1}{2}*0.886227)$
+
+$\mu = 1.77245$
+
+Standard Deviation:
+
+$\sigma = \sqrt{\beta^\frac{2}{\alpha} * [\Gamma(\frac{\alpha+2}{\alpha}-\Gamma^2(\frac{\alpha+1}{\alpha}]}$
+
+$\Gamma^2(\frac{\alpha+1}{\alpha} = 0.866227^2 = 0.7853982955$
+
+$\Gamma(\frac{\alpha+2}{\alpha}) = \Gamma(\frac{2+2}{2}) = \Gamma(2)$
+
+$\Gamma(2) = \int_0^\infty y^{2-1}*e^{-y}dy$
+
+$\Gamma(2) = \int_0^\infty y^{1}*e^{-y}dy$
+
+$\Gamma(2) = 1$
+
+$\sigma = \sqrt{4^\frac{2}{2} * [1-0.7853982955]}$
+
+$\sigma =0.9265$
+
+## c)
+
+$\mu+2*\sigma = 1.77245+2*0.9265 = 3.62545893$
+
+$\mu-2*\sigma = 1.77245-2*0.9265 = -0.0805509304$
+
+$P(\mu-2*\sigma<Y<\mu+2*\sigma)= [-e^{-\frac{y^2}{4}}]_{-0.0805509304}^{3.62545893}$
+
+$P(\mu-2*\sigma<Y<\mu+2*\sigma)= 0.96097$
+## d)
+
+$F(y_o) = \int_0^{y_0} \frac{\alpha}{\beta} * y^{\alpha-1}*e^{-\frac{y^\alpha}{\beta}} dy$
+
+$P(Y>6) = 1-F(6) = 1-\int_0^{6} \frac{1}{2} * y^{1}*e^{-\frac{y^2}{4}} dy$
+
+$P(Y>6) = 1-F(6) = 1[-e^{-\frac{y^2}{4}}]_0^6$
+
+$P(Y>6)=0.00012341$
+
+thus it is unlikely
+
+# MS 5.84 - Page 223
+
+## given:
+
+$\alpha = 2$ and $\beta = 9$
+
+## a)
+
+$\mu = \frac{\alpha}{\beta+\alpha} = \frac{2}{2+9} = 0.18182$
+
+$\sigma^2 = \frac{\alpha*\beta}{(\alpha+\beta)^2(\alpha+\beta+1)} = \frac{2*9}{(2+9)^2*(2+9+1)}$
+
+$\sigma^2 = 0.01240$
+
+## b)
+
+
+$\Gamma(\alpha) = \int_0^\infty y^{\alpha-1}*e^{-y} dy$
+
+therfore 
+
+
+$B(\alpha,\beta) = \int_{0}^{1} y^{2-1}*(1-y)^{9-1}dy = \frac{1}{90}$
+
+$P(>0.4) = 1-F(0.4) = 1-\int_{0}^{0.4} \frac{y^{2-1}*(1-y)^{9-1}}{\frac{1}{90}} dy= 0.0463574$
+
+
+## c)
+
+$P(<0.1) = F(0.1) =\int_{0}^{0.1} \frac{y^{2-1}*(1-y)^{9-1}}{\frac{1}{90}} = 0.263901$
+
+# MS 5.114 - Page 232
+
+## a)
+
+$\alpha = 2$
+
+$\beta = 16$
+
+## b)
+
+
+mean:
+
+$\mu = \beta^\frac{1}{\alpha}*\Gamma(\frac{\alpha+1}{\alpha})$
+
+$\frac{\alpha+1}{\alpha} = \frac{2+1}{2} = \frac{3}{2}$
+
+$\Gamma(\alpha) = \int_0^\infty y^{\frac{3}{2}-1}*e^{-y} dy$
+
+$\Gamma(\alpha) = \int_0^\infty y^{\frac{1}{2}}*e^{-y} dy$
+
+$\Gamma(\alpha) = 0.886227$
+
+$\mu = 16^\frac{1}{2}*0.886227)$
+
+$\mu = 3.544908$
+
+Standard Deviation:
+
+$\sigma = \sqrt{\beta^\frac{2}{\alpha} * [\Gamma(\frac{\alpha+2}{\alpha}-\Gamma^2(\frac{\alpha+1}{\alpha}]}$
+
+$\Gamma^2(\frac{\alpha+1}{\alpha} = 0.866227^2 = 0.7853982955$
+
+$\Gamma(\frac{\alpha+2}{\alpha}) = \Gamma(\frac{2+2}{2}) = \Gamma(2)$
+
+$\Gamma(2) = \int_0^\infty y^{2-1}*e^{-y}dy$
+
+$\Gamma(2) = \int_0^\infty y^{1}*e^{-y}dy$
+
+$\Gamma(2) = 1$
+
+$\sigma^2 = 16^\frac{2}{2} * [1-0.7853982955]$
+
+$\sigma =3.4336272$
+
+## c)
+
+$F(y_o) = \int_0^{y_0} \frac{\alpha}{\beta} * y^{\alpha-1}*e^{-\frac{y^\alpha}{\beta}} dy$
+
+$P(Y>6) = 1-F(6) = 1-\int_0^{6} \frac{2}{16} * y^{1}*e^{-\frac{y^2}{16}} dy$
+
+$P(Y>6)=0.105399$
+
+# MS 6.2 - Page 239
+
+## a)
+
+$p(x,y) = \frac{1}{6*6} = \frac{1}{36}$
+
+## b)
+
+if a is a constant between 1 and 6, and is an element of X, abd b is a constant between 1 and 6 and is an element of Y. 
+
+$p_1(X=a) = p(a,1)+p(a,2)+p(a,3)+p(a,4)+p(a,5)+p(a,6)$
+
+but because they are equally distributed $p(a,b) = \frac{1}{36}$
+
+thus $p_1(X=a) = \frac{1}{36}+\frac{1}{36}+\frac{1}{36}+\frac{1}{36}+\frac{1}{36}+\frac{1}{36} = \frac{6}{36} = \frac{1}{6}$
+
+this same logic applies to $p_2(y)$,
+
+$p_2(Y=b) = p(1,b)+p(2,b)+p(3,b)+p(4,b)+p(5,b)+p(6,b)$
+
+but because they are equally distributed $p(a,b) = \frac{1}{36}$
+
+$p_2(Y=b) = \frac{1}{36}+\frac{1}{36}+\frac{1}{36}+\frac{1}{36}+\frac{1}{36}+\frac{1}{36} = \frac{6}{36} = \frac{1}{6}$
+
+## c)
+
+$p_1(X|Y)=\frac{p(x,y)}{p_2(y)}$
+
+where 
+
+$p(x,y) = \frac{1}{36}$ for any given x, y
+
+thus, 
+
+$p_1(X|Y)= \frac{1/36}{1/6} = \frac{1}{6}$
+
+
+$p21(X|Y)=\frac{p(x,y)}{p_1(y)}$
+
+where 
+
+$p(x,y) = \frac{1}{36}$ for any given x, y
+
+thus, 
+
+$p_2(X|Y)= \frac{1/36}{1/6} = \frac{1}{6}$
+
+
+## d)
+
+they are independent because $p_1(X|Y) = p_1(X)$ and $p_2(X|Y) = p_2(Y)$
+
+# MS 6.4 - Page 240
+
+## a)
+
+number of times that each combination happens
+(1,1): 1
+(1,2): 0
+(1,3): 0
+(2,1): 2
+(2,2): 0
+(2,3): 0
+(3,1): 1
+(3,2): 2
+(3,3): 1
+
+now we divided this by the total ammount of trials which is 7
+
+(1,1): 1/7
+(1,2): 0/7
+(1,3): 0/7
+(2,1): 2/7
+(2,2): 0/7
+(2,3): 0/7
+(3,1): 1/7
+(3,2): 2/7
+(3,3): 1/7
+```{r}
+#creating table
+table = matrix(NA, nrow =3 ,ncol = 3)
+#labeling the table 
+colnames(table) = c("X=1","X=2","X=3")
+rownames(table) = c("Y=1","Y=2","Y=3")
+#Imputing the values of the table
+table[1,] = c("1/7","2/7","1/7")
+table[2,] = c("0","0","2/7")
+table[3,] = c("0","0","1/7")
+#printing the table
+library(knitr)
+kable(table, caption = "Table")
+
+```
+
+## b)
+
+$P_1(X=3) = \frac{1}{7}+\frac{2}{7}+\frac{1}{7} = \frac{4}{7}$
+
+$P_1(X=2) = \frac{2}{7}+0+0 = \frac{2}{7}$
+
+$P_1(X=1) = \frac{1}{7}+0+0 = \frac{1}{7}$
+
+```{r}
+#creating table
+table = matrix(NA, nrow =1 ,ncol = 3)
+#labeling the table 
+colnames(table) = c("X=1","X=2","X=3")
+rownames(table) = c("p_1(X)")
+#Imputing the values of the table
+table[1,] = c("1/7","2/7","4/7")
+#printing the table
+library(knitr)
+kable(table, caption = "Table")
+
+```
+
+## c)
+
+$P_2(Y=3) = \frac{1}{7}+\frac{2}{7}+\frac{1}{7} = \frac{4}{7}$
+
+$P_2(Y=2) = 0+0+\frac{2}{7} = \frac{2}{7}$
+
+$P_2(Y=1) = 0+0+\frac{1}{7} = \frac{1}{7}$
+
+```{r}
+#creating table
+table = matrix(NA, nrow =1 ,ncol = 3)
+#labeling the table 
+colnames(table) =  c("Y=1","Y=2","Y=3")
+rownames(table) = c("p_2(Y)")
+#Imputing the values of the table
+table[1,] = c("4/7","2/7","1/7")
+#printing the table
+library(knitr)
+kable(table, caption = "Table")
+
+```
+
+## d) 
+
+$P_2(Y|X) = \frac{p(x,y)}{p_1{x}}$
+
+$P_2(Y=1|X=1) = \frac{\frac{1}{7}}{\frac{1}{7}}= 1$
+
+$P_2(Y=2|X=1) = \frac{0}{\frac{1}{7}}= 0$
+
+$P_2(Y=3|X=1) = \frac{0}{\frac{1}{7}}= 0$
+
+$P_2(Y=1|X=2) = \frac{\frac{2}{7}}{\frac{2}{7}}= 1$
+
+$P_2(Y=2|X=2) = \frac{0}{\frac{2}{7}}= 0$
+
+$P_2(Y=3|X=2) = \frac{0}{\frac{2}{7}}= 0$
+
+$P_2(Y=1|X=3) = \frac{\frac{1}{7}}{\frac{4}{7}}= \frac{1}{4}$
+
+$P_2(Y=2|X=3) = \frac{\frac{2}{7}}{\frac{4}{7}}= \frac{1}{2}$
+
+$P_2(Y=3|X=3) = \frac{\frac{1}{7}}{\frac{4}{7}}= \frac{1}{4}$
+
+
+```{r}
+#creating table
+table = matrix(NA, nrow =3 ,ncol = 3)
+#labeling the table 
+colnames(table) =  c("Y=1","Y=2","Y=3")
+rownames(table) = c("P(Y|X=1)","P(Y|X=2)","P(Y|X=3)")
+#Imputing the values of the table
+table[1,] = c("1","0","0")
+table[2,] = c("1","0","0")
+table[3,] = c("1/4","1/2","1/4")
+#printing the table
+library(knitr)
+kable(table, caption = "Table")
+
+```
+
+# MS 6.12 - Page 244
+
+## a)
+
+$f_2(y) = \int_{-\infty}^{\infty} f(x,y)dx$
+
+$f_2(y) = \int_{-\infty}^{\infty} \frac{e^{\frac{-y}{10}}}{10y}dx$
+
+$f_2(y) = [\frac{e^{\frac{-y}{10}}}{10y} * x]_{-\infty}^{\infty}$
+
+but x can only go from y to 2y, thus 
+
+$f_2(y) = [\frac{e^{\frac{-y}{10}}}{10y} * x]_{y}^{2y}$
+
+$f_2(y) = \frac{e^{\frac{-y}{10}}}{10y} * y$
+
+$f_2(y) = \frac{e^{\frac{-y}{10}}}{10}$
+
+and this looks like an exponential probability 
+
+## b)
+
+using exponential equation it is known that,
+
+$\mu = \beta=10$
+
+# MS 6.14 - Page 245
+
+## a)
+
+$\int_0^{\infty} \int_0^x  c*e^{-x^2} dydx = 1$
+
+$\int_0^{\infty} x* c*e^{-x^2} dx = 1$
+
+$[-\frac{1}{2}*c*e^{-x^2}]_0^{\infty} = 1$
+
+$\frac{c}{2} = 1$
+
+$c= 2$
+
+## b) 
+
+$f_1(X) = \int_{-\infty}^{\infty} 2*e^{-x^2} dy$
+
+but due to the function 
+
+
+$f_1(X) = \int_{0}^{x} 2*e^{-x^2} dy$
+
+$f_1(X) = [2*e^{-x^2}*y]_0^x$
+
+$f_1(X) =2*x*e^{-x^2}$
+
+now the prove
+
+$\int_{-\infty}^{\infty} 2*x*e^{-x^2} dx$
+
+but due to the limits of the function
+
+$\int_{0}^{\infty} 2*x*e^{-x^2} dx$
+
+$[-e^{-x^2}]_0^{\infty}$
+
+which is equal to 1, thus,
+
+$\int_{-\infty}^{\infty} 2*x*e^{-x^2} dx = 1$
+
+## c)
+
+using the results from part a and b 
+
+$f_2(y|x) = \frac{f(x,y)}{f_1(x)}$
+
+
+$f_2(y|x) =\frac{2*e^{-x^2}}{2*x*e^{-x^2}} = \frac{1}{x}$
+
+# MS 6.51 - Page 253
+
+firts, lets find the expected values
+
+$E(XY) = \sum_x \sum_y xyp(x,y)$
+
+$E(XY) = (-1)(-1)*\frac{1}{12} + (-1)(0)*\frac{2}{12} + (-1)(1)*\frac{1}{12}+(0)(-1)*\frac{2}{12} + (0)(0)*0 + (0)(1)*\frac{2}{12} + (1)(-1)*\frac{1}{12} + (1)(0)*\frac{2}{12} + (1)(1)*\frac{1}{12}$
+
+$E(XY) = 0$
+
+$E(X) = \sum_x xp_1(X) = (-1)*\frac{4}{12}+0*\frac{4}{12}+(1)*\frac{4}{12} = 0$}
+
+$E(Y) = \sum_y yp(y) = (-1)*\frac{4}{12}+0*\frac{4}{12}+1*\frac{4}{12} = 0$
+
+thus, 
+
+$cov(x,y) = E(XY) - E(X)E(Y) = 0-0*0 = 0 $
+
+but 
+
+$p_1(X) = \frac{4}{12}$
+
+$p_2(Y) = \frac{4}{12}$
+
+$P_1(X)*p_2(Y) = \frac{1}{9}$
+
+but we have values where p(x,y) are equal to 0, 1/12, 2/12  which is not equal to the value that we found. thus, they are not independent.
+
+# MS 6.74 - Page 269
+
+## a)
+
+the population is distributed normally, and thus the samples taken would also distribute normally which mean that the mean would be the same
+$E(\bar{Y}) =\frac{b+a}{2} = \frac{3+1}{2} = 2$
+
+## b)
+
+the variance would change. this time it would be the variance of the population devided by n 
+
+$Var(Y) = \frac{(b-a)^2}{12} = \frac{(3-1)^2}{12} = \frac{1}{3}$
+
+thus,
+
+$Var(\bar{Y}) = \frac{1}{3*60} = \frac{1}{180}=0.005556$
+
+## c)
+
+the shape of the plot would also behave normally with the same mean as the population sample. nevertheless, as the amount of samples taken increases, the standard deviation (variance) would decrease which mean that the data would be less spread out given a thinner plot. thus, if enough samples are taken, the sample mean and variance should be the same as the population distribution which is normal.
+
+## d)
+
+for normal
+
+$f(x) = \frac{e^{-(x - \mu)^{2}/(2\sigma^{2}) }} {\sigma\sqrt{2\pi}}$
+
+$P(1.5<\bar{Y}<2.5) = \int_{1.5}^{2.5} \frac{e^{\frac{-(x - 2)^{2}}{(2*\frac{1}{180})}}} {\sqrt{\frac{1}{180}}*\sqrt{2\pi}} dx$
+
+
+$P(1.5<\bar{Y}<2.5) = \int_{1.5}^{2.5}{\frac{e^{-(x - 2)^{2}/(2(0.005556)) }}{\sqrt{(0.005556)2\pi}}}dx = 1$
+
+## e)
+
+if we do exceed: 
+$P(1.5<\bar{Y}<2.2) = 1-\int_{1.5}^{2.2}{\frac{e^{-(x - 2)^{2}/(2(0.005556)) }}{\sqrt{(0.005556)2\pi}}}dx = 0.00364635$
+
+if we get the probability that is lower:
+
+$P(1.5<\bar{Y}<2.2) = \int_{1.5}^{2.2}{\frac{e^{-(x - 2)^{2}/(2(0.005556)) }}{\sqrt{(0.005556)2\pi}}}dx = 0.996354$
+
+# MS 6.90 - Page 273
+
+## a)
+$P(Y \leq a) \approx P(Z<\frac{(a+0.5)-np}{\sqrt{npq}})$
+
+where 
+$ a = 2$, $n = 20$, $p=0.4$
+
+$P(Y \leq 2) \approx 1- P(Z>\frac{(2+0.5)-20*0.4}{\sqrt{20*0.4*0.6}})$
+
+$P(Z<-2.5104) = \int_{-\infty}^{1.5} \frac{e^{-(x-\mu)^2/(2*\sigma^2)}}{\sigma* \sqrt{2*\pi}} dx$
+
+$\mu = n * p = 20*0.4 = 8$
+
+$\sigma = \sqrt{n*p*q} = \sqrt{20*0.4*0.6} = 2.1908$
+
+$lower-Limit = \frac{0-8}{2.1908} = -3.651484$
+
+$P(Z<-2.5104) = \int_{-\infty}^{1.5} \frac{e^{-(x-8)^2/(2*2.1909^2)}}{2.1909* \sqrt{2*\pi}} dx$
+
+$P(Z<-2.5104) = 0.0015$
+
+## b)
+
+$P(Y \leq a) \approx P(Z<\frac{(a+0.5)-np}{\sqrt{npq}})$
+
+where 
+$ a = 10$, $n = 20$, $p=0.4$
+
+$P(Y \geq 10) \approx 1- P(Z>\frac{(10+0.5)-20*0.4}{\sqrt{20*0.4*0.6}})$
+
+$P(Z>1.14109) = 1-\int_{-\infty}^{9.5}\frac{e^{-(x-\mu)^2/(2*\sigma^2)}}{\sigma* \sqrt{2*\pi}} dx$
+
+$\mu = n * p = 20*0.4 = 8$
+
+$\sigma = \sqrt{n*p*q} = \sqrt{20*0.4*0.6} = 2.1908$
+
+$lower-Limit = \frac{0-8}{2.1908} = -3.651484$
+
+$P(Z>1.14109) = 1-\int_{-\infty}^{9.5} \frac{e^{-(x-8)^2/(2*2.1909^2)}}{2.1909* \sqrt{2*\pi}} dx$
+
+$P(Z>1.14109) = 0.1271$
+
+## c)
+
+from the binomial table (table 2 appendix B) the answer for A would be 0.0005 and for B would be 0.1275(1-0.8725). thus, the correlation are really close to each other. thus it provide a good approximation.
+
+# MS 7.108 - Page 362
+
+## a)
+
+```{r}
+library(readxl)
+dird = "C:/Users/Luis Mario Trevisi/OneDrive - University of Oklahoma/OU/Applied Statistical Methods/Math4753/MATH4753ouTrev0002/Assignment/Assignment 3/"
+
+myread = function(xls){
+  require(readxl)
+read_xls(paste0(dird, xls))
+}
+
+leadcop = myread("LEADCOPP.xls")
+
+
+t.test(leadcop$LEAD,conf.level = 0.99)
+```
+
+## b) 
+
+```{r}
+library(readxl)
+dird = "C:/Users/Luis Mario Trevisi/OneDrive - University of Oklahoma/OU/Applied Statistical Methods/Math4753/MATH4753ouTrev0002/Assignment/Assignment 3/"
+
+myread = function(xls){
+  require(readxl)
+read_xls(paste0(dird, xls))
+}
+
+leadcop = myread("LEADCOPP.xls")
+
+
+t.test(leadcop$COPPER,conf.level = 0.99)
+```
+
+## c)
+
+this mean that 99% of the trials would have a concentration of lead that lay between -1.478 and 6.919 ug/L  and 99% of the trials would have a concentration of copper that lay between 0.1518 and 0.66472 mg/L
+
+## d)
+
+the 99% confidence interval means that 99% of the data would lay within this interval.
+
+# MS 7.114 - Page 364
+
+```{r}
+library(readxl)
+dird = "C:/Users/Luis Mario Trevisi/OneDrive - University of Oklahoma/OU/Applied Statistical Methods/Math4753/MATH4753ouTrev0002/Assignment/Assignment 3/"
+
+myread = function(xls){
+  require(readxl)
+read_xls(paste0(dird, xls))
+}
+
+solrad = myread("SOLARAD.xls")
+
+
+with(solrad, t.test(STJOS, IOWA, paired=TRUE, conf.level = 0.95))
+```
+this means that 95% of the times that the mean difference between this two values is taken from random samples, it would lay between this interval (156.8193,239.1807)
+
+# MS 7.116 - Page 364
+
+## a)
+
+
+```{r}
+library(readxl)
+dird = "C:/Users/Luis Mario Trevisi/OneDrive - University of Oklahoma/OU/Applied Statistical Methods/Math4753/MATH4753ouTrev0002/Assignment/Assignment 3/"
+
+myread = function(xls){
+  require(readxl)
+read_xls(paste0(dird, xls))
+}
+
+diazinon = myread("DIAZINON.xls")
+
+with( diazinon, t.test(DAY, NIGHT, paired =TRUE, conf.level = 0.9))
+```
+
+
+## b)
+
+both of them can be approximated with the same distribution 
+
+## c)
+
+they do differ from day and nigth as 90% of the data would lay on a interval where an actual difference between the measurements exist
