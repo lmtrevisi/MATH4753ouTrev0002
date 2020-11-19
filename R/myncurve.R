@@ -1,4 +1,4 @@
-#' Title:myncurve:
+#' Title:myncurve
 #'
 #' @param mu: mean
 #' @param sigma: standard deviation
@@ -7,7 +7,7 @@
 #' @return
 #' @export
 #'
-#' @examples
+#' @examples myncurve(3,2,0.2)
 myncurve = function(mu, sigma,a){
   curve(dnorm(x,mean=mu,sd=sigma), xlim = c(mu-3*sigma, mu + 3*sigma))
   # x values corresponding to the x - cords of points on the curve

@@ -2,7 +2,7 @@
 % Please edit documentation in R/myhyper.R
 \name{myhyper}
 \alias{myhyper}
-\title{Title}
+\title{Hypergeometric Simulation}
 \usage{
 myhyper(iter, N, r, n)
 }
@@ -19,5 +19,8 @@ myhyper(iter, N, r, n)
 
 }
 \description{
-Title
+Hypergeometric Simulation
+}
+\examples{
+myhyper(100,10,5,8)
 }

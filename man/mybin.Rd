@@ -2,7 +2,7 @@
 % Please edit documentation in R/mybin.R
 \name{mybin}
 \alias{mybin}
-\title{Title}
+\title{Binomial Simulation}
 \usage{
 mybin(iter, n, p)
 }
@@ -17,5 +17,8 @@ mybin(iter, n, p)
 
 }
 \description{
-Title
+Binomial Simulation
+}
+\examples{
+mybin(30,5,0.7)
 }

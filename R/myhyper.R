@@ -1,4 +1,4 @@
-#' Title
+#' Hypergeometric Simulation
 #'
 #' @param iter Number of Iterations
 #' @param N Total number of elements
@@ -8,7 +8,7 @@
 #' @return
 #' @export
 #'
-#' @examples
+#' @examples myhyper(100,10,5,8)
 myhyper=function(iter,N,r,n){
   # make a matrix to hold the samples
   #initially filled with NA's

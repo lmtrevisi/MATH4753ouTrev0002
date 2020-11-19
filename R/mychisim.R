@@ -11,7 +11,7 @@
 #' @return
 #' @export
 #'
-#' @examples
+#' @examples mychisim(n1=10,sigma1=3,mean1=5,iter=1000,ymax=0.1,x=20, y=0.1)
 mychisim=function(n1=10,sigma1=3,mean1=5,iter=1000,ymax=0.1,x=20, y=0.1){
   y1=rnorm(n1*iter,mean=mean1,sd=sigma1)# generate iter samples of size n1
 

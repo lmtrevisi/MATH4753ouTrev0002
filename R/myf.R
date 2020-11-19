@@ -7,7 +7,7 @@
 #' @return a vector of square components in the form of a vector object
 #' @export
 #'
-#' @examples
+#' @examples myf(3)
 #' x = 1:30 ; myf(x)
 myf = function(x,y){
  1+3+x+y

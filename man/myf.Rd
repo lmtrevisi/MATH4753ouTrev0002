@@ -16,5 +16,6 @@ a vector of square components in the form of a vector object
 takes vector and returns a vector of squared components
 }
 \examples{
+myf(3)
 x = 1:30 ; myf(x)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mynbin.R
 \name{mynbin}
 \alias{mynbin}
-\title{Title}
+\title{Binomial Probability}
 \usage{
 mynbin(y, r, p)
 }
@@ -17,5 +17,5 @@ mynbin(y, r, p)
 
 }
 \description{
-Title
+Binomial Probability
 }

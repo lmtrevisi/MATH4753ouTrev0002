@@ -2,7 +2,7 @@
 % Please edit documentation in R/myncurve.R
 \name{myncurve}
 \alias{myncurve}
-\title{Title:myncurve:}
+\title{Title:myncurve}
 \usage{
 myncurve(mu, sigma, a)
 }
@@ -17,5 +17,8 @@ myncurve(mu, sigma, a)
 
 }
 \description{
-Title:myncurve:
+Title:myncurve
+}
+\examples{
+myncurve(3,2,0.2)
 }

@@ -1,4 +1,4 @@
-#' Title
+#' Binomial Simulation
 #'
 #' @param iter Number of Interations
 #' @param n number of trials
@@ -7,7 +7,7 @@
 #' @return
 #' @export
 #'
-#' @examples
+#' @examples mybin(30,5,0.7)
 mybin=function(iter,n, p){
   # make a matrix to hold the samples
   #initially filled with NA's
