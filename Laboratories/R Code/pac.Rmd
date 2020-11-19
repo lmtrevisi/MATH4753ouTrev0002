@@ -28,7 +28,7 @@ Please place your first function in the r chunk in the following way:
 
 Once you are ready please remove the option `eval = FALSE`
 
-```{r first, eval = FALSE}
+```{r first}
 MATH4753ouTrev0002::myhyper(100,10,5,8)
 
 ```
@@ -40,7 +40,7 @@ Please place your second function in the r chunk in the following way:
 
 Once you are ready please remove the option `eval = FALSE`
 
-```{r second, eval = FALSE}
+```{r second}
 MATH4753ouTrev0002::myci(x=rnorm(7,mean=3,sd=1),conf.int=0.95)
 
 ```
@@ -52,8 +52,8 @@ Please place your third function in the r chunk in the following way:
 
 Once you are ready please remove the option `eval = FALSE`
 
-```{r third, eval = FALSE}
-MYPAC::myf3(option1 = , option2 = , etc)
+```{r third}
+MATH4753ouTrev0002::mychisim(n1 = 10, sigma1 = 3, mean1 = 5,iter = 1000,ymax = 0.1, x = 20, y = 0.1)
 
 ```
 
@@ -64,8 +64,8 @@ Please place your forth function in the r chunk in the following way:
 
 Once you are ready please remove the option `eval = FALSE`
 
-```{r forth, eval = FALSE}
-MYPAC::myf4(option1 = , option2 = , etc)
+```{r forth}
+MATH4753ouTrev0002::mychisim2(n1 = 10, n2 = 14, sigma1 = 3, sigma2 = 3, mean1 = 5,mean2 = 10, iter = 1000,ymax = 0.07,x = 40, y = 0.04,)
 
 ```
 
@@ -74,6 +74,6 @@ MYPAC::myf4(option1 = , option2 = , etc)
 
 
 This is the address of my GITHUB repository:
-<https://github.com/MATHSTATSOU/Intro2R.git>
+<https://github.com/lmtrevisi/MATH4753ouTrev0002>
 
 Replace this with your own address.

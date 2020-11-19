@@ -17,3 +17,21 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(MATH4753ouTrev0002)
 ```
+
+# Functions
+
+## myhyper
+
+creates a simulation of a hypergeometric probability using the number of iterations, the total number of elemetents, the number of success in the N elements and the number of elements drawn
+
+## myci
+
+creates the confidence interval of the mean given the samples and the confindence on the interval 
+
+## mychisim
+
+creates a simulation for 1 parameter chi-square statistic using the sample size, standard deviation of the population, mean of the population and number of iterations
+
+## mychisim2 
+
+creates a simulation for 2 parameter chi-square statistic using the sample size, standard deviation of the population, mean of the population and number of iterations of both sample populations
